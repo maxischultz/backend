@@ -1,0 +1,526 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Despachos - Logística Global Ltda.</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary-color: #0b67ff;
+      --despacho-color: #f59e0b;
+      --success: #10b981;
+      --danger: #ef4444;
+      --muted-color: #6b7280;
+      --dark-color: #0f172a;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f8fafb;
+      min-height: 100vh;
+    }
+    .navbar-custom {
+      background: rgba(255,255,255,0.98);
+      box-shadow: 0 2px 20px rgba(12,24,50,0.10);
+      backdrop-filter: blur(8px);
+      padding: 1rem 0;
+    }
+    .logo-icon {
+      width: 48px; height: 48px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary-color), var(--despacho-color));
+      display: flex; align-items: center; justify-content: center;
+      color: white;
+      font-weight: 700; font-size: 1.2rem;
+      box-shadow: 0 4px 12px rgba(11, 103, 255, 0.25);
+    }
+    .brand-text h5 { margin:0; font-weight:700; color:var(--dark-color);}
+    .brand-text small { color:var(--muted-color);}
+    .navbar-custom .nav-link { color:var(--muted-color); font-weight:600; padding:0.5rem 1rem;}
+    .navbar-custom .nav-link.active, .navbar-custom .nav-link:hover { color:var(--despacho-color);}
+    .navbar-custom .nav-link.active::after {
+      content: ''; position: absolute; bottom: 0; left: 1rem; right: 1rem; height: 3px; background: var(--despacho-color); border-radius: 2px;
+    }
+    .btn-despacho {
+      background: linear-gradient(135deg, var(--despacho-color), #fffbe0);
+      border: none; color: #fff; font-weight: 600;
+      padding: 0.5rem 1.5rem; border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(245,158,11,0.2);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-despacho:hover {
+      color: #fff;
+      transform: translateY(-2px);
+      background: var(--despacho-color);
+      box-shadow: 0 8px 24px rgba(245,158,11,0.22);
+    }
+    .page-title-section {
+      background: white; padding: 2rem 0; margin-bottom: 2rem; border-bottom: 3px solid #ffe3b5;
+    }
+    .page-title-section h1 { font-size: 2.4rem; font-weight: 700; color: var(--dark-color);}
+    .page-title-section p { color: var(--muted-color); font-size: 1rem;}
+    /* Filtros y listado */
+    .search-bar {
+      background: white; padding: 1.5rem; border-radius: 16px; margin-bottom: 2rem;
+      box-shadow: 0 2px 10px rgba(245,158,11,0.09);
+    }
+    .despacho-list { display: flex; flex-direction: column; gap: 1rem;}
+    .despacho-item {
+      background: white; border-radius: 16px; padding: 1.5rem; display: flex; align-items: center; gap: 1.5rem;
+      box-shadow: 0 2px 10px rgba(245,158,11,0.08); transition: 0.3s;
+      border-left: 4px solid var(--despacho-color);
+    }
+    .despacho-item:hover {
+      box-shadow: 0 8px 24px rgba(245,158,11,0.18);
+      transform: translateX(4px);
+    }
+    .despacho-icon {
+      width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 2rem; color: var(--despacho-color); background: #fffbe0;
+      box-shadow: 0 2px 8px rgba(245,158,11,0.11);
+    }
+    .despacho-info { flex: 1; }
+    .despacho-num { font-size: 1.3rem; font-weight: 700; margin:0; color: var(--dark-color);}
+    .despacho-status {
+      margin: 0.2rem 0; font-size: 0.95rem; font-weight: 600; letter-spacing: 1px;
+    }
+    .badge-pendiente { background: #fde68a; color: #92400e;}
+    .badge-enruta { background: #d1fae5; color: #065f46;}
+    .badge-entregado { background: #e0f2fe; color: #1e40af;}
+    .badge-cancelado { background: #fee2e2; color: #991b1b;}
+    .despacho-stats { display: flex; gap: 2rem;}
+    .stat-item { text-align: center;}
+    .stat-valor { font-size: 1.25rem; font-weight: 700; color: var(--despacho-color); }
+    .stat-label { font-size: 0.86rem; color: var(--muted-color);}
+    .despacho-actions { display: flex; flex-direction: column; gap: 0.5rem;}
+    /* Modal */
+    .modal-content { border-radius: 20px;}
+    .modal-header-custom {
+      background: linear-gradient(135deg, var(--despacho-color),#fff9e6);
+      color: #4d3200; padding: 2rem; border: none;
+    }
+    .modal-header-custom .btn-close { filter: brightness(0) invert(1);}
+    .form-label-custom { font-weight: 600; color: var(--dark-color);}
+    /* Empty */
+    .empty-state { text-align:center; padding:4rem 2rem; color:var(--muted-color);}
+    .empty-state i { font-size:4rem; margin-bottom:1rem; opacity:0.22;}
+    /* Responsive */
+    @media (max-width: 991px) {
+      .despacho-item { flex-direction: column; text-align:center;}
+      .despacho-stats { justify-content:center;}
+      .despacho-actions { flex-direction: row; width:100%;}
+    }
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+  <div class="container">
+
+    <a class="navbar-brand logo-container" href="#">
+      <div class="logo-icon">LG</div>
+      <div class="brand-text">
+        <h5>Logística Global Ltda.</h5>
+        <small>Transporte terrestre y aéreo</small>
+      </div>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto align-items-lg-center">
+        
+        <li class="nav-item">
+          <a class="nav-link active" href="">
+            <i class="bi bi-house-door me-1"></i> Inicio
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'vehiculos' %}">
+            <i class="bi bi-truck me-1"></i> Vehículos
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'aeronaves' %}">
+            <i class="bi bi-airplane me-1"></i> Aeronaves
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'pilotos' %}">
+            <i class="bi bi-people me-1"></i> Pilotos
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'rutas' %}">
+            <i class="bi bi-geo-alt me-1"></i> Rutas
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'despachos' %}">
+            <i class="bi bi-box-seam me-1"></i> Despachos
+          </a>
+        </li>
+         <li class="nav-item">
+          <a class="nav-link" href="{% url 'carga' %}">
+            <i class="bi bi-box-seam me-1"></i> Carga
+          </a>
+        </li>
+         <li class="nav-item">
+          <a class="nav-link" href="{% url 'cliente' %}">
+            <i class="bi bi-truck me-1"></i> Clientes
+          </a>
+        </li>
+
+       
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+
+  <!-- Page Title -->
+  <div class="page-title-section">
+    <div class="container">
+      <h1><i class="bi bi-box-seam-fill text-warning me-3"></i>Gestión de Despachos</h1>
+      <p>Seguimiento y registro de despachos, estados y destinos</p>
+    </div>
+  </div>
+
+  <main class="container my-4">
+    <!-- Filtros -->
+    <div class="search-bar mb-3">
+      <div class="row g-3">
+        <div class="col-md-5">
+          <input type="text" class="form-control form-control-lg" id="buscarDespacho" placeholder="Buscar por número, destino o cliente...">
+        </div>
+        <div class="col-md-3">
+          <select class="form-select form-select-lg" id="filtroEstado">
+            <option value="">Todos los estados</option>
+            <option value="pendiente">Pendiente</option>
+            <option value="enruta">En Ruta</option>
+            <option value="entregado">Entregado</option>
+            <option value="cancelado">Cancelado</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <select class="form-select form-select-lg" id="filtroVehiculo">
+            <option value="">Todos los vehículos</option>
+            <option value="camioneta">Camioneta</option>
+            <option value="camión">Camión</option>
+            <option value="van">Van</option>
+            <option value="furgón">Furgón</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <!-- Listado -->
+    <div class="despacho-list" id="listaDespachos">
+      <!-- Se llena dinámicamente -->
+    </div>
+  </main>
+
+  <!-- Modal Nuevo Despacho -->
+  <div class="modal fade" id="nuevoDespachoModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header-custom">
+          <h5 class="modal-title"><i class="bi bi-plus-circle-fill me-2"></i>Registrar Nuevo Despacho</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-4">
+          <form id="formNuevoDespacho">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label-custom">Número Despacho *</label>
+                <input type="text" class="form-control" id="numDespacho" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-custom">Cliente *</label>
+                <input type="text" class="form-control" id="clienteDespacho" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-custom">Destino *</label>
+                <input type="text" class="form-control" id="destinoDespacho" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-custom">Vehículo Asignado *</label>
+                <select class="form-select" id="vehiculoDespacho" required>
+                  <option value="">Seleccionar...</option>
+                  <option value="camioneta">Camioneta</option>
+                  <option value="camión">Camión</option>
+                  <option value="van">Van</option>
+                  <option value="furgón">Furgón</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-custom">Estado *</label>
+                <select class="form-select" id="estadoDespacho" required>
+                  <option value="pendiente">Pendiente</option>
+                  <option value="enruta">En Ruta</option>
+                  <option value="entregado">Entregado</option>
+                  <option value="cancelado">Cancelado</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-custom">Fecha Programada *</label>
+                <input type="date" class="form-control" id="fechaDespacho" required>
+              </div>
+              <div class="col-12">
+                <label class="form-label-custom">Observaciones</label>
+                <textarea class="form-control" id="obsDespacho" rows="3"></textarea>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-despacho" onclick="guardarDespacho()">
+            <i class="bi bi-check-circle me-2"></i>Guardar Despacho
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Editar Despacho -->
+  <div class="modal fade" id="editarDespachoModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header-custom">
+          <h5 class="modal-title"><i class="bi bi-pencil-square me-2"></i>Editar Despacho</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-4">
+          <form id="formEditarDespacho">
+            <input type="hidden" id="editIdDespacho">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label-custom">Número Despacho *</label>
+                <input type="text" class="form-control" id="editNumDespacho" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-custom">Cliente *</label>
+                <input type="text" class="form-control" id="editClienteDespacho" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-custom">Destino *</label>
+                <input type="text" class="form-control" id="editDestinoDespacho" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-custom">Vehículo Asignado *</label>
+                <select class="form-select" id="editVehiculoDespacho" required>
+                  <option value="">Seleccionar...</option>
+                  <option value="camioneta">Camioneta</option>
+                  <option value="camión">Camión</option>
+                  <option value="van">Van</option>
+                  <option value="furgón">Furgón</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-custom">Estado *</label>
+                <select class="form-select" id="editEstadoDespacho" required>
+                  <option value="pendiente">Pendiente</option>
+                  <option value="enruta">En Ruta</option>
+                  <option value="entregado">Entregado</option>
+                  <option value="cancelado">Cancelado</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-custom">Fecha Programada *</label>
+                <input type="date" class="form-control" id="editFechaDespacho" required>
+              </div>
+              <div class="col-12">
+                <label class="form-label-custom">Observaciones</label>
+                <textarea class="form-control" id="editObsDespacho" rows="3"></textarea>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-despacho" onclick="actualizarDespacho()">
+            <i class="bi bi-check-circle me-2"></i>Actualizar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+  <script>
+    let despachos = [
+      {
+        id: 1,
+        numero: 'DP-20251101A',
+        cliente: 'AgroMart',
+        destino: 'Antofagasta',
+        vehiculo: 'camión',
+        estado: 'enruta',
+        fecha: '2025-11-14',
+        ordenes: 3,
+        peso: '1800kg',
+        observaciones: 'Despacho con carga refrigerada'
+      },
+      {
+        id: 2,
+        numero: 'DP-20251102B',
+        cliente: 'Farmax Chile',
+        destino: 'Santiago',
+        vehiculo: 'camioneta',
+        estado: 'pendiente',
+        fecha: '2025-11-14',
+        ordenes: 1,
+        peso: '280kg',
+        observaciones: 'Esperando confirmación del cliente'
+      },
+      {
+        id: 3,
+        numero: 'DP-20251103C',
+        cliente: 'Transportes Torres',
+        destino: 'Puerto Montt',
+        vehiculo: 'van',
+        estado: 'cancelado',
+        fecha: '2025-11-11',
+        ordenes: 2,
+        peso: '990kg',
+        observaciones: 'Ruta suspendida por mal tiempo'
+      }
+    ];
+    let siguienteId=4;
+    document.addEventListener('DOMContentLoaded',function(){
+      renderizarDespachos();
+      document.getElementById('buscarDespacho').addEventListener('input',filtrarDespachos);
+      document.getElementById('filtroEstado').addEventListener('change',filtrarDespachos);
+      document.getElementById('filtroVehiculo').addEventListener('change',filtrarDespachos);
+    });
+    function renderizarDespachos() {
+      const lista=document.getElementById('listaDespachos');
+      lista.innerHTML='';
+      let filtrados=filtrarDespachos(true);
+      if(filtrados.length===0){
+        lista.innerHTML=`
+        <div class="empty-state">
+          <i class="bi bi-truck"></i>
+          <p>No se encontraron despachos según los filtros seleccionados.</p>
+        </div>`;
+        return;
+      }
+      filtrados.forEach(d=>{ lista.innerHTML+=generarItemHTML(d); });
+    }
+    function filtrarDespachos(devolver=false){
+      let txt=document.getElementById('buscarDespacho').value.trim().toLowerCase();
+      let estado=document.getElementById('filtroEstado').value;
+      let veh=document.getElementById('filtroVehiculo').value;
+      let filtrados=despachos.filter(d=>
+        (d.numero.toLowerCase().includes(txt) || d.destino.toLowerCase().includes(txt) || d.cliente.toLowerCase().includes(txt)) &&
+        (!estado || d.estado===estado) &&
+        (!veh || d.vehiculo===veh)
+      );
+      if(devolver)return filtrados;
+      renderizarDespachos();
+    }
+    function generarItemHTML(d){
+      let badgeEstado =
+        d.estado==='pendiente' ? 'badge-pendiente' :
+        d.estado==='enruta' ? 'badge-enruta' :
+        d.estado==='entregado' ? 'badge-entregado' :
+        'badge-cancelado';
+      let labelEstado =
+        d.estado==='pendiente' ? 'Pendiente' :
+        d.estado==='enruta' ? 'En Ruta' :
+        d.estado==='entregado' ? 'Entregado' : 'Cancelado';
+      return `
+      <div class="despacho-item">
+        <div class="despacho-icon"><i class="bi bi-box-seam"></i></div>
+        <div class="despacho-info">
+          <p class="despacho-num">${d.numero}</p>
+          <div><span class="fw-semibold">${d.cliente}</span> &bull; <span class="text-muted">${d.destino}</span></div>
+          <span class="badge badge-custom ${badgeEstado} despacho-status">${labelEstado}</span>
+          <div class="mt-1 text-muted" style="font-size:0.97rem;">${d.observaciones||''}</div>
+        </div>
+        <div class="despacho-stats">
+          <div class="stat-item"><span class="stat-valor">${d.ordenes}</span> <span class="stat-label">Órdenes</span></div>
+          <div class="stat-item"><span class="stat-valor">${d.peso}</span> <span class="stat-label">Peso</span></div>
+          <div class="stat-item"><span class="stat-valor">${d.vehiculo}</span> <span class="stat-label">Vehículo</span></div>
+        </div>
+        <div class="despacho-actions">
+          <button class="btn btn-outline-warning btn-sm" onclick="abrirEditarDespacho(${d.id})">
+            <i class="bi bi-pencil"></i> Editar
+          </button>
+        </div>
+      </div>`;
+    }
+    // Modal funciones
+    function abrirEditarDespacho(id){
+      const modal=new bootstrap.Modal(document.getElementById('editarDespachoModal'));
+      let d=despachos.find(x=>x.id===id); if(!d)return;
+      document.getElementById('editIdDespacho').value=d.id;
+      document.getElementById('editNumDespacho').value=d.numero;
+      document.getElementById('editClienteDespacho').value=d.cliente;
+      document.getElementById('editDestinoDespacho').value=d.destino;
+      document.getElementById('editVehiculoDespacho').value=d.vehiculo;
+      document.getElementById('editEstadoDespacho').value=d.estado;
+      document.getElementById('editFechaDespacho').value=d.fecha;
+      document.getElementById('editObsDespacho').value=d.observaciones;
+      modal.show();
+    }
+    function actualizarDespacho(){
+      const id=parseInt(document.getElementById('editIdDespacho').value);
+      let d=despachos.find(x=>x.id===id); if(!d)return;
+      d.numero=document.getElementById('editNumDespacho').value;
+      d.cliente=document.getElementById('editClienteDespacho').value;
+      d.destino=document.getElementById('editDestinoDespacho').value;
+      d.vehiculo=document.getElementById('editVehiculoDespacho').value;
+      d.estado=document.getElementById('editEstadoDespacho').value;
+      d.fecha=document.getElementById('editFechaDespacho').value;
+      d.observaciones=document.getElementById('editObsDespacho').value;
+      renderizarDespachos();
+      bootstrap.Modal.getInstance(document.getElementById('editarDespachoModal')).hide();
+    }
+    function guardarDespacho(){
+      const numero=document.getElementById('numDespacho').value;
+      const cliente=document.getElementById('clienteDespacho').value;
+      const destino=document.getElementById('destinoDespacho').value;
+      const vehiculo=document.getElementById('vehiculoDespacho').value;
+      const estado=document.getElementById('estadoDespacho').value;
+      const fecha=document.getElementById('fechaDespacho').value;
+      const obs=document.getElementById('obsDespacho').value;
+      if(!numero||!cliente||!destino||!vehiculo||!estado||!fecha){ alert('Completa todos los campos obligatorios (*)'); return; }
+      const nuevo={
+        id:siguienteId++,
+        numero,cliente,destino,vehiculo,estado,fecha,
+        ordenes:1,peso:'0kg',observaciones:obs
+      };
+      despachos.push(nuevo);
+      renderizarDespachos();
+      document.getElementById('formNuevoDespacho').reset();
+      bootstrap.Modal.getInstance(document.getElementById('nuevoDespachoModal')).hide();
+    }
+  </script>
+</body>
+</html>
+
+<footer style="background:#222; color:#fff; text-align:center; padding:20px 0;">
+  <div>
+    <p>&copy; Martin petron Maximiliano Muñoz AP-173-N4 2025.</p>
+    <p>
+      <a href="/privacidad" style="color:#aaa; text-decoration:underline;">Política de privacidad</a> |
+      <a href="/contacto" style="color:#aaa; text-decoration:underline;">Contacto</a>
+    </p>
+  </div>
+</footer>

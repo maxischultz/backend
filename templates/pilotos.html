@@ -1,0 +1,923 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pilotos y Conductores - Logística Global Ltda.</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Bootstrap Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --primary-color: #0b67ff;
+      --secondary-color: #00b4ff;
+      --dark-color: #0f172a;
+      --muted-color: #6b7280;
+      --success-color: #10b981;
+      --warning-color: #f59e0b;
+      --danger-color: #ef4444;
+      --light-bg: #f7fbff;
+      --shadow-light: rgba(0, 0, 0, 0.1);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--light-bg);
+      min-height: 100vh;
+      color: var(--dark-color);
+    }
+
+    /* Navbar */
+    .navbar-custom {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 20px rgba(12, 24, 50, 0.08);
+      padding: 1rem 0;
+      margin-bottom: 2rem;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--dark-color);
+      text-decoration: none;
+    }
+
+    .logo-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 12px rgba(11, 103, 255, 0.3);
+    }
+
+    .brand-text h5 {
+      margin: 0;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--dark-color);
+    }
+
+    .brand-text small {
+      color: var(--muted-color);
+      font-size: 0.75rem;
+    }
+
+    .navbar-custom .nav-link {
+      color: var(--muted-color);
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .navbar-custom .nav-link:hover,
+    .navbar-custom .nav-link.active {
+      color: var(--primary-color);
+    }
+
+    .navbar-custom .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 1rem;
+      right: 1rem;
+      height: 3px;
+      background: var(--primary-color);
+      border-radius: 2px;
+    }
+
+    .btn-primary-custom {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      border: none;
+      color: white;
+      font-weight: 600;
+      padding: 0.6rem 1.75rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px var(--shadow-light);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-primary-custom:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px var(--primary-color);
+    }
+
+    /* Page Header */
+    .page-header {
+      background: white;
+      border-radius: 16px;
+      padding: 2rem 2rem 1rem 2rem;
+      margin-bottom: 2.5rem;
+      box-shadow: 0 4px 25px var(--shadow-light);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .page-header h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin: 0;
+    }
+
+    .page-header p {
+      color: var(--muted-color);
+      font-weight: 500;
+      margin: 0;
+      font-size: 1rem;
+      max-width: 500px;
+    }
+
+    /* Section Title */
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--dark-color);
+      margin: 3rem 0 1.5rem;
+      padding-left: 1rem;
+      border-left: 4px solid var(--primary-color);
+    }
+
+    /* Filters Section */
+    .filters-section {
+      background: white;
+      border-radius: 16px;
+      padding: 1.75rem 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 20px var(--shadow-light);
+    }
+
+    .filters-section label {
+      font-weight: 600;
+      color: var(--dark-color);
+      margin-bottom: 0.35rem;
+      display: block;
+    }
+
+    .filters-section input,
+    .filters-section select {
+      width: 100%;
+      border-radius: 12px;
+      border: 1.5px solid #ddd;
+      padding: 0.55rem 1rem;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+
+    .filters-section input:focus,
+    .filters-section select:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 8px rgba(11, 103, 255, 0.3);
+    }
+
+    /* Personnel Cards */
+    #listaConductores,
+    #listaPilotos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .personnel-item {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px var(--shadow-light);
+      padding: 1.8rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+    }
+
+    .personnel-item:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 18px 40px rgba(11, 103, 255, 0.3);
+    }
+
+    .personnel-header {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .personnel-avatar {
+      font-size: 2rem;
+      color: white;
+      width: 65px;
+      height: 65px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(11, 103, 255, 0.3);
+      font-weight: 700;
+    }
+
+    .personnel-info {
+      flex-grow: 1;
+    }
+
+    .personnel-name {
+      font-weight: 700;
+      font-size: 1.35rem;
+      margin-bottom: 0.25rem;
+      color: var(--dark-color);
+    }
+
+    .personnel-role {
+      font-size: 0.95rem;
+      color: var(--muted-color);
+      font-weight: 600;
+    }
+
+    .personnel-badges {
+      margin-top: 0.6rem;
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+
+    .badge-custom {
+      font-weight: 600;
+      padding: 0.35rem 0.85rem;
+      border-radius: 50px;
+      color: white;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .badge-disponible {
+      background-color: var(--success-color);
+    }
+
+    .badge-ocupado {
+      background-color: var(--danger-color);
+    }
+
+    .badge-licencia {
+      background-color: var(--warning-color);
+      color: black;
+    }
+
+    .badge-info {
+      background-color: #0dcaf0;
+    }
+
+    .personnel-stats {
+      display: flex;
+      gap: 2.5rem;
+      font-size: 0.95rem;
+      color: var(--muted-color);
+      justify-content: center;
+      border-top: 1px solid #e9ecef;
+      padding-top: 0.9rem;
+      margin-top: 0.5rem;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--primary-color);
+      display: block;
+    }
+
+    .personnel-actions {
+      position: absolute;
+      top: 1.3rem;
+      right: 1.3rem;
+      display: flex;
+      gap: 0.6rem;
+    }
+
+    .personnel-actions button {
+      border: none;
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--danger-color);
+      font-size: 1.2rem;
+      padding: 0.4rem 0.5rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .personnel-actions button:hover {
+      background: var(--danger-color);
+      color: white;
+      transform: scale(1.1);
+    }
+
+    .personnel-observations {
+      font-size: 0.9rem;
+      color: var(--muted-color);
+      margin-top: 0.5rem;
+      font-style: italic;
+      line-height: 1.4;
+      padding: 0.75rem;
+      background: #f8f9fa;
+      border-radius: 8px;
+    }
+
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      color: var(--muted-color);
+      font-size: 1.2rem;
+      padding: 3rem 1rem;
+    }
+
+    /* Alert container */
+    #alertContainer {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      z-index: 9999;
+      max-width: 400px;
+    }
+
+    @media (max-width: 576px) {
+      .personnel-item {
+        padding: 1.3rem 1.5rem;
+      }
+
+      .personnel-stats {
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Alert Container -->
+  <div id="alertContainer"></div>
+
+  <!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+  <div class="container">
+
+    <a class="navbar-brand logo-container" href="#">
+      <div class="logo-icon">LG</div>
+      <div class="brand-text">
+        <h5>Logística Global Ltda.</h5>
+        <small>Transporte terrestre y aéreo</small>
+      </div>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto align-items-lg-center">
+        
+        <li class="nav-item">
+          <a class="nav-link active" href="">
+            <i class="bi bi-house-door me-1"></i> Inicio
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'vehiculos' %}">
+            <i class="bi bi-truck me-1"></i> Vehículos
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'aeronaves' %}">
+            <i class="bi bi-airplane me-1"></i> Aeronaves
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'pilotos' %}">
+            <i class="bi bi-people me-1"></i> Pilotos
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'rutas' %}">
+            <i class="bi bi-geo-alt me-1"></i> Rutas
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'despachos' %}">
+            <i class="bi bi-box-seam me-1"></i> Despachos
+          </a>
+        </li>
+         <li class="nav-item">
+          <a class="nav-link" href="{% url 'carga' %}">
+            <i class="bi bi-box-seam me-1"></i> Carga
+          </a>
+        </li>
+         <li class="nav-item">
+          <a class="nav-link" href="{% url 'cliente' %}">
+            <i class="bi bi-truck me-1"></i> Clientes
+          </a>
+        </li>
+
+       
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  <!-- Main Content -->
+  <main class="container my-4">
+
+    <header class="page-header">
+      <div>
+        <h1><i class="bi bi-people-fill"></i> Pilotos y Conductores</h1>
+        <p>Gestiona y visualiza la información detallada de tu equipo de pilotos y conductores.</p>
+      </div>
+    </header>
+
+    <!-- Sección Conductores -->
+    <h2 class="section-title"><i class="bi bi-truck me-2"></i>Conductores</h2>
+    
+    <section class="filters-section">
+      <div class="row g-4">
+        <div class="col-md-4">
+          <label for="buscarConductor">Buscar Conductor</label>
+          <input type="search" class="form-control" id="buscarConductor" placeholder="Nombre o RUT" />
+        </div>
+        <div class="col-md-4">
+          <label for="filtroConductorEstado">Estado</label>
+          <select class="form-select" id="filtroConductorEstado">
+            <option value="">Todos</option>
+            <option value="disponible">Disponible</option>
+            <option value="ocupado">Ocupado</option>
+            <option value="licencia">En Licencia</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label for="filtroConductorLicencia">Tipo de Licencia</label>
+          <select class="form-select" id="filtroConductorLicencia">
+            <option value="">Todas</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <div id="listaConductores"></div>
+
+    <!-- Sección Pilotos -->
+    <h2 class="section-title"><i class="bi bi-airplane me-2"></i>Pilotos</h2>
+    
+    <section class="filters-section">
+      <div class="row g-4">
+        <div class="col-md-4">
+          <label for="buscarPiloto">Buscar Piloto</label>
+          <input type="search" class="form-control" id="buscarPiloto" placeholder="Nombre o RUT" />
+        </div>
+        <div class="col-md-4">
+          <label for="filtroPilotoEstado">Estado</label>
+          <select class="form-select" id="filtroPilotoEstado">
+            <option value="">Todos</option>
+            <option value="disponible">Disponible</option>
+            <option value="ocupado">Ocupado</option>
+            <option value="licencia">En Licencia</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label for="filtroPilotoLicencia">Tipo de Licencia</label>
+          <select class="form-select" id="filtroPilotoLicencia">
+            <option value="">Todas</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <div id="listaPilotos"></div>
+
+  </main>
+
+  <!-- Modal Nuevo Personal -->
+  <div class="modal fade" id="nuevoPersonalModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title"><i class="bi bi-person-plus-fill me-2"></i>Nuevo Personal</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="formNuevoPersonal">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="nombre" class="form-label">Nombre completo *</label>
+                <input type="text" class="form-control" id="nombre" required />
+              </div>
+              <div class="col-md-6">
+                <label for="rut" class="form-label">RUT *</label>
+                <input type="text" class="form-control" id="rut" required />
+              </div>
+              <div class="col-md-6">
+                <label for="tipoPersonal" class="form-label">Tipo de personal *</label>
+                <select id="tipoPersonal" class="form-select" required onchange="cambiarTipoPersonal()">
+                  <option value="">Seleccionar...</option>
+                  <option value="conductor">Conductor</option>
+                  <option value="piloto">Piloto</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label for="licencia" class="form-label">Licencia *</label>
+                <select id="licencia" class="form-select" required>
+                  <option value="">Seleccionar...</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label for="estado" class="form-label">Estado *</label>
+                <select id="estado" class="form-select" required>
+                  <option value="disponible">Disponible</option>
+                  <option value="ocupado">Ocupado</option>
+                  <option value="licencia">En Licencia</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label for="telefono" class="form-label">Teléfono</label>
+                <input type="tel" class="form-control" id="telefono" />
+              </div>
+              <div class="col-md-6">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" />
+              </div>
+              <div class="col-md-6">
+                <label for="experiencia" class="form-label">Años de Experiencia</label>
+                <input type="number" class="form-control" id="experiencia" min="0" value="0" />
+              </div>
+              <div class="col-12">
+                <label for="observaciones" class="form-label">Observaciones</label>
+                <textarea class="form-control" id="observaciones" rows="3"></textarea>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" onclick="guardarPersonal()">
+            <i class="bi bi-check-circle me-2"></i>Guardar Personal
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    let siguienteId = 3;
+
+    const licenciasConductor = ["A1", "A2", "B", "C", "D", "E"];
+    const licenciasPiloto = ["PPL", "CPL", "ATPL", "Instructor"];
+    
+    let conductores = [
+      {
+        id: 1,
+        nombre: "Juan Pérez González",
+        rut: "12.345.678-9",
+        estado: "disponible",
+        licencia: "C",
+        viajes: 156,
+        experiencia: 8,
+        telefono: "+56 9 1234 5678",
+        email: "juan.perez@example.com",
+        observaciones: "Conductor experimentado, excelente record"
+      }
+    ];
+    
+    let pilotos = [
+      {
+        id: 2,
+        nombre: "Carlos Díaz Morales",
+        rut: "98.765.432-1",
+        estado: "ocupado",
+        licencia: "ATPL",
+        viajes: 342,
+        experiencia: 15,
+        telefono: "+56 9 8765 4321",
+        email: "carlos.diaz@example.com",
+        observaciones: "Piloto senior, certificado internacional"
+      }
+    ];
+
+    // Inicialización
+    window.addEventListener('DOMContentLoaded', () => {
+      cargarOpcionesLicencias();
+      renderizarConductores();
+      renderizarPilotos();
+      
+      // Event listeners filtros conductores
+      document.getElementById('buscarConductor').addEventListener('input', filtrarConductores);
+      document.getElementById('filtroConductorEstado').addEventListener('change', filtrarConductores);
+      document.getElementById('filtroConductorLicencia').addEventListener('change', filtrarConductores);
+      
+      // Event listeners filtros pilotos
+      document.getElementById('buscarPiloto').addEventListener('input', filtrarPilotos);
+      document.getElementById('filtroPilotoEstado').addEventListener('change', filtrarPilotos);
+      document.getElementById('filtroPilotoLicencia').addEventListener('change', filtrarPilotos);
+    });
+
+    function cargarOpcionesLicencias() {
+      const filtroConductor = document.getElementById('filtroConductorLicencia');
+      licenciasConductor.forEach(lic => {
+        const opt = document.createElement('option');
+        opt.value = lic;
+        opt.textContent = `Licencia ${lic}`;
+        filtroConductor.appendChild(opt);
+      });
+      
+      const filtroPiloto = document.getElementById('filtroPilotoLicencia');
+      licenciasPiloto.forEach(lic => {
+        const opt = document.createElement('option');
+        opt.value = lic;
+        opt.textContent = lic;
+        filtroPiloto.appendChild(opt);
+      });
+    }
+
+    function cambiarTipoPersonal() {
+      const tipo = document.getElementById('tipoPersonal').value;
+      const selectLicencia = document.getElementById('licencia');
+      selectLicencia.innerHTML = '<option value="">Seleccionar...</option>';
+      
+      const licencias = tipo === 'conductor' ? licenciasConductor : tipo === 'piloto' ? licenciasPiloto : [];
+      
+      licencias.forEach(lic => {
+        const opt = document.createElement('option');
+        opt.value = lic;
+        opt.textContent = tipo === 'conductor' ? `Licencia ${lic}` : lic;
+        selectLicencia.appendChild(opt);
+      });
+    }
+
+    function mostrarNotificacion(mensaje, tipo = 'success') {
+      const alertContainer = document.getElementById('alertContainer');
+      const alertDiv = document.createElement('div');
+      alertDiv.className = `alert alert-${tipo} alert-dismissible fade show`;
+      alertDiv.role = 'alert';
+      
+      const iconMap = {
+        success: 'check-circle-fill',
+        danger: 'exclamation-triangle-fill',
+        info: 'info-circle-fill'
+      };
+      
+      alertDiv.innerHTML = `
+        <i class="bi bi-${iconMap[tipo]} me-2"></i>${mensaje}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      `;
+      alertContainer.appendChild(alertDiv);
+      
+      setTimeout(() => {
+        alertDiv.classList.remove('show');
+        setTimeout(() => alertDiv.remove(), 150);
+      }, 3000);
+    }
+
+    function getInitials(nombre) {
+      return nombre.split(' ').slice(0, 2).map(n => n[0]).join('').toUpperCase();
+    }
+
+    function renderizarConductores(conductoresFiltrados = conductores) {
+      const lista = document.getElementById('listaConductores');
+      lista.innerHTML = '';
+      
+      if (conductoresFiltrados.length === 0) {
+        lista.innerHTML = '<div class="empty-state">No se encontraron conductores</div>';
+        return;
+      }
+      
+      conductoresFiltrados.forEach(c => {
+        const card = document.createElement('div');
+        card.className = 'personnel-item';
+        card.innerHTML = `
+          <div class="personnel-actions">
+            <button onclick="eliminarConductor(${c.id})" title="Eliminar">
+              <i class="bi bi-trash"></i>
+            </button>
+          </div>
+          <div class="personnel-header">
+            <div class="personnel-avatar">${getInitials(c.nombre)}</div>
+            <div class="personnel-info">
+              <div class="personnel-name">${c.nombre}</div>
+              <div class="personnel-role">RUT: ${c.rut}</div>
+              <div class="personnel-badges">
+                <span class="badge-custom badge-${c.estado}">${c.estado.charAt(0).toUpperCase() + c.estado.slice(1)}</span>
+                <span class="badge-custom badge-info">Licencia ${c.licencia}</span>
+              </div>
+            </div>
+          </div>
+          <div class="personnel-stats">
+            <div class="stat-item">
+              <span class="stat-value">${c.viajes}</span>
+              <div>Viajes</div>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">${c.experiencia}</span>
+              <div>Años Exp.</div>
+            </div>
+          </div>
+          ${c.observaciones ? `<div class="personnel-observations">"${c.observaciones}"</div>` : ''}
+        `;
+        lista.appendChild(card);
+      });
+    }
+
+    function renderizarPilotos(pilotosFiltrados = pilotos) {
+      const lista = document.getElementById('listaPilotos');
+      lista.innerHTML = '';
+      
+      if (pilotosFiltrados.length === 0) {
+        lista.innerHTML = '<div class="empty-state">No se encontraron pilotos</div>';
+        return;
+      }
+      
+      pilotosFiltrados.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'personnel-item';
+        card.innerHTML = `
+          <div class="personnel-actions">
+            <button onclick="eliminarPiloto(${p.id})" title="Eliminar">
+              <i class="bi bi-trash"></i>
+            </button>
+          </div>
+          <div class="personnel-header">
+            <div class="personnel-avatar">${getInitials(p.nombre)}</div>
+            <div class="personnel-info">
+              <div class="personnel-name">${p.nombre}</div>
+              <div class="personnel-role">RUT: ${p.rut}</div>
+              <div class="personnel-badges">
+                <span class="badge-custom badge-${p.estado}">${p.estado.charAt(0).toUpperCase() + p.estado.slice(1)}</span>
+                <span class="badge-custom badge-info">${p.licencia}</span>
+              </div>
+            </div>
+          </div>
+          <div class="personnel-stats">
+            <div class="stat-item">
+              <span class="stat-value">${p.viajes}</span>
+              <div>Vuelos</div>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">${p.experiencia}</span>
+              <div>Años Exp.</div>
+            </div>
+          </div>
+          ${p.observaciones ? `<div class="personnel-observations">"${p.observaciones}"</div>` : ''}
+        `;
+        lista.appendChild(card);
+      });
+    }
+
+    // FUNCIÓN GUARDAR PERSONAL - COMPLETA Y FUNCIONAL
+    function guardarPersonal() {
+      const form = document.getElementById('formNuevoPersonal');
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      const tipo = document.getElementById('tipoPersonal').value;
+      const personal = {
+        id: siguienteId++,
+        nombre: document.getElementById('nombre').value,
+        rut: document.getElementById('rut').value,
+        estado: document.getElementById('estado').value,
+        licencia: document.getElementById('licencia').value,
+        telefono: document.getElementById('telefono').value,
+        email: document.getElementById('email').value,
+        experiencia: parseInt(document.getElementById('experiencia').value) || 0,
+        viajes: 0,
+        observaciones: document.getElementById('observaciones').value
+      };
+
+      if (tipo === 'conductor') {
+        conductores.push(personal);
+        renderizarConductores();
+        mostrarNotificacion('✓ Conductor agregado exitosamente', 'success');
+      } else if (tipo === 'piloto') {
+        pilotos.push(personal);
+        renderizarPilotos();
+        mostrarNotificacion('✓ Piloto agregado exitosamente', 'success');
+      }
+
+      // Cerrar modal
+      const modal = bootstrap.Modal.getInstance(document.getElementById('nuevoPersonalModal'));
+      modal.hide();
+      
+      // Limpiar formulario
+      form.reset();
+    }
+
+    function eliminarConductor(id) {
+      if (confirm('¿Está seguro de eliminar este conductor?')) {
+        conductores = conductores.filter(c => c.id !== id);
+        renderizarConductores();
+        mostrarNotificacion('✓ Conductor eliminado exitosamente', 'danger');
+      }
+    }
+
+    function eliminarPiloto(id) {
+      if (confirm('¿Está seguro de eliminar este piloto?')) {
+        pilotos = pilotos.filter(p => p.id !== id);
+        renderizarPilotos();
+        mostrarNotificacion('✓ Piloto eliminado exitosamente', 'danger');
+      }
+    }
+
+    function filtrarConductores() {
+      const buscar = document.getElementById('buscarConductor').value.toLowerCase();
+      const estado = document.getElementById('filtroConductorEstado').value;
+      const licencia = document.getElementById('filtroConductorLicencia').value;
+      
+      let filtrados = [...conductores];
+      
+      if (buscar) {
+        filtrados = filtrados.filter(c => 
+          c.nombre.toLowerCase().includes(buscar) ||
+          c.rut.includes(buscar)
+        );
+      }
+      
+      if (estado) {
+        filtrados = filtrados.filter(c => c.estado === estado);
+      }
+      
+      if (licencia) {
+        filtrados = filtrados.filter(c => c.licencia === licencia);
+      }
+      
+      renderizarConductores(filtrados);
+    }
+
+    function filtrarPilotos() {
+      const buscar = document.getElementById('buscarPiloto').value.toLowerCase();
+      const estado = document.getElementById('filtroPilotoEstado').value;
+      const licencia = document.getElementById('filtroPilotoLicencia').value;
+      
+      let filtrados = [...pilotos];
+      
+      if (buscar) {
+        filtrados = filtrados.filter(p => 
+          p.nombre.toLowerCase().includes(buscar) ||
+          p.rut.includes(buscar)
+        );
+      }
+      
+      if (estado) {
+        filtrados = filtrados.filter(p => p.estado === estado);
+      }
+      
+      if (licencia) {
+        filtrados = filtrados.filter(p => p.licencia === licencia);
+      }
+      
+      renderizarPilotos(filtrados);
+    }
+  </script>
+
+</body>
+
+</html>
+
+<footer style="background:#222; color:#fff; text-align:center; padding:20px 0;">
+  <div>
+    <p>&copy; Martin petron Maximiliano Muñoz AP-173-N4 2025.</p>
+    <p>
+      <a href="/privacidad" style="color:#aaa; text-decoration:underline;">Política de privacidad</a> |
+      <a href="/contacto" style="color:#aaa; text-decoration:underline;">Contacto</a>
+    </p>
+  </div>
+</footer>

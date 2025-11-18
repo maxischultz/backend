@@ -1,0 +1,1115 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rutas - Logística Global Ltda.</title>
+  
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary-color: #0b67ff;
+      --secondary-color: #00b4ff;
+      --dark-color: #0f172a;
+      --muted-color: #6b7280;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to bottom, #eef2ff, #f9fafb);
+      min-height: 100vh;
+    }
+    
+    /* Navbar */
+    .navbar-custom {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 20px rgba(12, 24, 50, 0.08);
+      padding: 1rem 0;
+    }
+    
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .logo-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 12px rgba(11, 103, 255, 0.3);
+    }
+    
+    .brand-text h5 {
+      margin: 0;
+      font-weight: 700;
+      color: var(--dark-color);
+      font-size: 1.1rem;
+    }
+    
+    .brand-text small {
+      color: var(--muted-color);
+      font-size: 0.75rem;
+    }
+    
+    .navbar-custom .nav-link {
+      color: var(--muted-color);
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    
+    .navbar-custom .nav-link:hover,
+    .navbar-custom .nav-link.active {
+      color: var(--primary-color);
+    }
+    
+    .navbar-custom .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 1rem;
+      right: 1rem;
+      height: 3px;
+      background: var(--primary-color);
+      border-radius: 2px;
+    }
+    
+    .btn-primary-custom {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      border: none;
+      color: white;
+      font-weight: 600;
+      padding: 0.5rem 1.5rem;
+      border-radius: 8px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .btn-primary-custom:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(11, 103, 255, 0.4);
+    }
+    
+    /* Header Banner */
+    .header-banner {
+      background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+      color: white;
+      padding: 3rem 0;
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .header-banner::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 500px;
+      height: 500px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+    }
+    
+    .header-banner h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin: 0 0 0.5rem 0;
+      position: relative;
+    }
+    
+    .header-banner p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      margin: 0;
+      position: relative;
+    }
+    
+    /* Filter Section */
+    .filter-section {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+    
+    .filter-title {
+      font-weight: 700;
+      color: var(--dark-color);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    /* Route Timeline */
+    .route-timeline {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+      border-left: 5px solid var(--primary-color);
+    }
+    
+    .route-timeline:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    }
+    
+    .route-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    
+    .route-title-section h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--dark-color);
+      margin: 0 0 0.5rem 0;
+    }
+    
+    .route-code {
+      color: var(--muted-color);
+      font-size: 0.9rem;
+    }
+    
+    .route-badges {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    
+    .badge-route {
+      padding: 0.5rem 1rem;
+      border-radius: 25px;
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+    
+    .badge-terrestre {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+    
+    .badge-aereo {
+      background: #e0e7ff;
+      color: #4338ca;
+    }
+    
+    .badge-nacional {
+      background: #d1fae5;
+      color: #065f46;
+    }
+    
+    .badge-internacional {
+      background: #fef3c7;
+      color: #92400e;
+    }
+    
+    /* Timeline Path */
+    .timeline-path {
+      position: relative;
+      padding: 2rem 0;
+    }
+    
+    .timeline-line {
+      position: absolute;
+      left: 30px;
+      top: 40px;
+      bottom: 40px;
+      width: 3px;
+      background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+    }
+    
+    .timeline-stop {
+      position: relative;
+      padding-left: 80px;
+      margin-bottom: 2rem;
+    }
+    
+    .timeline-stop:last-child {
+      margin-bottom: 0;
+    }
+    
+    .timeline-icon {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 60px;
+      height: 60px;
+      background: white;
+      border: 4px solid var(--primary-color);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: var(--primary-color);
+      box-shadow: 0 4px 10px rgba(11, 103, 255, 0.2);
+      z-index: 1;
+    }
+    
+    .timeline-icon.destination {
+      background: var(--primary-color);
+      color: white;
+    }
+    
+    .stop-content {
+      background: #f8fafc;
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+    }
+    
+    .stop-title {
+      font-weight: 700;
+      color: var(--dark-color);
+      font-size: 1.1rem;
+      margin: 0 0 0.5rem 0;
+    }
+    
+    .stop-details {
+      display: flex;
+      gap: 2rem;
+      color: var(--muted-color);
+      font-size: 0.9rem;
+      flex-wrap: wrap;
+    }
+    
+    .stop-detail {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    /* Route Footer */
+    .route-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 2px solid #f0f0f0;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    
+    .route-stats {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    
+    .stat-item {
+      text-align: center;
+    }
+    
+    .stat-value {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      display: block;
+    }
+    
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--muted-color);
+    }
+    
+    .route-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+    
+    /* Modal */
+    .modal-content {
+      border: none;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+    
+    .modal-header-custom {
+      background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+      color: white;
+      padding: 2rem;
+      border: none;
+    }
+    
+    .modal-header-custom .btn-close {
+      filter: brightness(0) invert(1);
+    }
+    
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+    
+    .empty-state i {
+      font-size: 5rem;
+      color: var(--muted-color);
+      opacity: 0.3;
+      margin-bottom: 1rem;
+    }
+    
+    .empty-state h3 {
+      color: var(--dark-color);
+      margin-bottom: 0.5rem;
+    }
+    
+    .empty-state p {
+      color: var(--muted-color);
+    }
+    
+    /* Responsive */
+    @media (max-width: 991px) {
+      .navbar-custom .nav-link.active::after {
+        display: none;
+      }
+      
+      .header-banner h1 {
+        font-size: 2rem;
+      }
+      
+      .route-header {
+        flex-direction: column;
+      }
+      
+      .timeline-stop {
+        padding-left: 70px;
+      }
+      
+      .timeline-line {
+        left: 25px;
+      }
+      
+      .timeline-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+  <div class="container">
+
+    <a class="navbar-brand logo-container" href="#">
+      <div class="logo-icon">LG</div>
+      <div class="brand-text">
+        <h5>Logística Global Ltda.</h5>
+        <small>Transporte terrestre y aéreo</small>
+      </div>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto align-items-lg-center">
+        
+        <li class="nav-item">
+          <a class="nav-link active" href="">
+            <i class="bi bi-house-door me-1"></i> Inicio
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'vehiculos' %}">
+            <i class="bi bi-truck me-1"></i> Vehículos
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'aeronaves' %}">
+            <i class="bi bi-airplane me-1"></i> Aeronaves
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'pilotos' %}">
+            <i class="bi bi-people me-1"></i> Pilotos
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'rutas' %}">
+            <i class="bi bi-geo-alt me-1"></i> Rutas
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'despachos' %}">
+            <i class="bi bi-box-seam me-1"></i> Despachos
+          </a>
+        </li>
+         <li class="nav-item">
+          <a class="nav-link" href="{% url 'carga' %}">
+            <i class="bi bi-box-seam me-1"></i> Carga
+          </a>
+        </li>
+         <li class="nav-item">
+          <a class="nav-link" href="{% url 'cliente' %}">
+            <i class="bi bi-truck me-1"></i> Clientes
+          </a>
+        </li>
+
+       
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <!-- Header Banner -->
+  <div class="header-banner">
+    <div class="container">
+      <h1><i class="bi bi-map me-3"></i>Gestión de Rutas</h1>
+      <p>Planifica y optimiza tus rutas de transporte terrestre y aéreo</p>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="container my-4">
+    <!-- Filter Section -->
+    <div class="filter-section">
+      <h5 class="filter-title">
+        <i class="bi bi-funnel"></i>
+        Filtrar Rutas
+      </h5>
+      <div class="row g-3">
+        <div class="col-md-4">
+          <input type="text" class="form-control form-control-lg" id="buscarRuta" placeholder="Buscar por código o ciudad...">
+        </div>
+        <div class="col-md-2">
+          <select class="form-select form-select-lg" id="filtroTipo">
+            <option value="">Tipo de Ruta</option>
+            <option value="terrestre">Terrestre</option>
+            <option value="aereo">Aéreo</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <select class="form-select form-select-lg" id="filtroAlcance">
+            <option value="">Alcance</option>
+            <option value="nacional">Nacional</option>
+            <option value="internacional">Internacional</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <select class="form-select form-select-lg" id="filtroEstado">
+            <option value="">Estado</option>
+            <option value="activa">Activa</option>
+            <option value="inactiva">Inactiva</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-secondary btn-lg w-100" onclick="limpiarFiltros()">
+            <i class="bi bi-x-circle"></i> Limpiar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Routes List -->
+    <div id="listaRutas">
+      <!-- Se llena dinámicamente -->
+    </div>
+  </main>
+
+  <!-- Modal Nueva Ruta -->
+  <div class="modal fade" id="nuevaRutaModal" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header-custom">
+          <h5 class="modal-title"><i class="bi bi-plus-circle me-2"></i>Crear Nueva Ruta</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-4">
+          <form id="formNuevaRuta">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Código de Ruta *</label>
+                <input type="text" class="form-control" id="codigo" required placeholder="Ej: RT-001">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Nombre de la Ruta *</label>
+                <input type="text" class="form-control" id="nombre" required placeholder="Ej: Santiago - Valparaíso">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label fw-bold">Tipo *</label>
+                <select class="form-select" id="tipo" required>
+                  <option value="">Seleccionar...</option>
+                  <option value="terrestre">Terrestre</option>
+                  <option value="aereo">Aéreo</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label fw-bold">Alcance *</label>
+                <select class="form-select" id="alcance" required>
+                  <option value="">Seleccionar...</option>
+                  <option value="nacional">Nacional</option>
+                  <option value="internacional">Internacional</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label fw-bold">Distancia (km)</label>
+                <input type="number" class="form-control" id="distancia" step="0.1">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label fw-bold">Duración Estimada (hrs)</label>
+                <input type="number" class="form-control" id="duracion" step="0.5">
+              </div>
+              
+              <div class="col-12">
+                <hr class="my-3">
+                <h6 class="fw-bold mb-3"><i class="bi bi-geo-fill me-2"></i>Paradas de la Ruta</h6>
+              </div>
+              
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Ciudad Origen *</label>
+                <input type="text" class="form-control" id="origen" required placeholder="Ej: Santiago, Chile">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Hora Salida Estimada</label>
+                <input type="time" class="form-control" id="horaSalida">
+              </div>
+              
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Parada Intermedia (Opcional)</label>
+                <input type="text" class="form-control" id="parada" placeholder="Ej: Rancagua, Chile">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Tiempo en Parada (min)</label>
+                <input type="number" class="form-control" id="tiempoParada">
+              </div>
+              
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Ciudad Destino *</label>
+                <input type="text" class="form-control" id="destino" required placeholder="Ej: Valparaíso, Chile">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Hora Llegada Estimada</label>
+                <input type="time" class="form-control" id="horaLlegada">
+              </div>
+              
+              <div class="col-12">
+                <label class="form-label fw-bold">Observaciones</label>
+                <textarea class="form-control" id="observaciones" rows="3"></textarea>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" onclick="guardarRuta()">
+            <i class="bi bi-check-circle me-2"></i>Crear Ruta
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    let rutas = [
+      {
+        id: 1,
+        codigo: 'RT-001',
+        nombre: 'Santiago - Valparaíso Express',
+        tipo: 'terrestre',
+        alcance: 'nacional',
+        distancia: 120,
+        duracion: 1.5,
+        origen: 'Santiago, Chile',
+        horaSalida: '08:00',
+        paradas: [
+          { ciudad: 'Curacaví, Chile', tiempo: 15 }
+        ],
+        destino: 'Valparaíso, Chile',
+        horaLlegada: '09:30',
+        estado: 'activa',
+        viajesRealizados: 156,
+        observaciones: 'Ruta principal hacia el puerto'
+      },
+      {
+        id: 2,
+        codigo: 'RT-002',
+        nombre: 'Santiago - Buenos Aires Cargo',
+        tipo: 'aereo',
+        alcance: 'internacional',
+        distancia: 1400,
+        duracion: 2.5,
+        origen: 'Santiago, Chile',
+        horaSalida: '14:00',
+        paradas: [],
+        destino: 'Buenos Aires, Argentina',
+        horaLlegada: '16:30',
+        estado: 'activa',
+        viajesRealizados: 89,
+        observaciones: 'Requiere documentación aduanera'
+      },
+      {
+        id: 3,
+        codigo: 'RT-003',
+        nombre: 'Santiago - Concepción Sur',
+        tipo: 'terrestre',
+        alcance: 'nacional',
+        distancia: 520,
+        duracion: 6.5,
+        origen: 'Santiago, Chile',
+        horaSalida: '06:00',
+        paradas: [
+          { ciudad: 'Rancagua, Chile', tiempo: 20 },
+          { ciudad: 'Talca, Chile', tiempo: 30 }
+        ],
+        destino: 'Concepción, Chile',
+        horaLlegada: '12:30',
+        estado: 'activa',
+        viajesRealizados: 234,
+        observaciones: 'Ruta con paradas estratégicas'
+      },
+      {
+        id: 4,
+        codigo: 'RT-004',
+        nombre: 'Santiago - Lima Internacional',
+        tipo: 'aereo',
+        alcance: 'internacional',
+        distancia: 2900,
+        duracion: 4.0,
+        origen: 'Santiago, Chile',
+        horaSalida: '10:00',
+        paradas: [],
+        destino: 'Lima, Perú',
+        horaLlegada: '14:00',
+        estado: 'activa',
+        viajesRealizados: 67,
+        observaciones: 'Coordinación con aduanas peruanas'
+      }
+    ];
+
+    let siguienteId = 5;
+
+    document.addEventListener('DOMContentLoaded', function() {
+      renderizarRutas();
+      
+      document.getElementById('buscarRuta').addEventListener('input', filtrarRutas);
+      document.getElementById('filtroTipo').addEventListener('change', filtrarRutas);
+      document.getElementById('filtroAlcance').addEventListener('change', filtrarRutas);
+      document.getElementById('filtroEstado').addEventListener('change', filtrarRutas);
+    });
+
+    function renderizarRutas() {
+      const lista = document.getElementById('listaRutas');
+      lista.innerHTML = '';
+      
+      if (rutas.length === 0) {
+        lista.innerHTML = `
+          <div class="empty-state">
+            <i class="bi bi-signpost-2"></i>
+            <h3>No hay rutas registradas</h3>
+            <p>Crea tu primera ruta para comenzar a planificar tus envíos</p>
+          </div>
+        `;
+        return;
+      }
+      
+      rutas.forEach(r => {
+        const rutaDiv = document.createElement('div');
+        rutaDiv.className = 'route-timeline';
+        
+        let paradasHTML = '';
+        if (r.paradas && r.paradas.length > 0) {
+          paradasHTML = r.paradas.map(p => `
+            <div class="timeline-stop">
+              <div class="timeline-icon">
+                <i class="bi bi-pause-circle"></i>
+              </div>
+              <div class="stop-content">
+                <h6 class="stop-title">${p.ciudad}</h6>
+                <div class="stop-details">
+                  <div class="stop-detail">
+                    <i class="bi bi-clock"></i>
+                    <span>Tiempo de parada: ${p.tiempo} min</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `).join('');
+        }
+        
+        rutaDiv.innerHTML = `
+          <div class="route-header">
+            <div class="route-title-section">
+              <h3>${r.nombre}</h3>
+              <div class="route-code">Código: ${r.codigo}</div>
+            </div>
+            <div class="route-badges">
+              <span class="badge-route badge-${r.tipo}">
+                <i class="bi bi-${r.tipo === 'terrestre' ? 'truck' : 'airplane'}"></i> ${capitalize(r.tipo)}
+              </span>
+              <span class="badge-route badge-${r.alcance}">
+                <i class="bi bi-${r.alcance === 'nacional' ? 'flag' : 'globe'}"></i> ${capitalize(r.alcance)}
+              </span>
+            </div>
+          </div>
+          
+          <div class="timeline-path">
+            <div class="timeline-line"></div>
+            
+            <div class="timeline-stop">
+              <div class="timeline-icon">
+                <i class="bi bi-geo-alt-fill"></i>
+              </div>
+              <div class="stop-content">
+                <h6 class="stop-title">${r.origen}</h6>
+                <div class="stop-details">
+                  <div class="stop-detail">
+                    <i class="bi bi-clock"></i>
+                    <span>Salida: ${r.horaSalida}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            ${paradasHTML}
+            
+            <div class="timeline-stop">
+              <div class="timeline-icon destination">
+                <i class="bi bi-flag-fill"></i>
+              </div>
+              <div class="stop-content">
+                <h6 class="stop-title">${r.destino}</h6>
+                <div class="stop-details">
+                  <div class="stop-detail">
+                    <i class="bi bi-clock"></i>
+                    <span>Llegada: ${r.horaLlegada}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="route-footer">
+            <div class="route-stats">
+              <div class="stat-item">
+                <span class="stat-value">${r.distancia}</span>
+                <span class="stat-label">km</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-value">${r.duracion}</span>
+                <span class="stat-label">horas</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-value">${r.viajesRealizados}</span>
+                <span class="stat-label">viajes</span>
+              </div>
+            </div>
+            <div class="route-actions">
+              <button class="btn btn-outline-info btn-sm" onclick="verDetalles(${r.id})">
+                <i class="bi bi-eye"></i> Ver
+              </button>
+              <button class="btn btn-outline-danger btn-sm" onclick="eliminarRuta(${r.id})">
+                <i class="bi bi-trash"></i>
+              </button>
+            </div>
+          </div>
+        `;
+        
+        lista.appendChild(rutaDiv);
+      });
+    }
+
+    function guardarRuta() {
+      const paradas = [];
+      const paradaIntermedia = document.getElementById('parada').value;
+      const tiempoParada = document.getElementById('tiempoParada').value;
+      
+      if (paradaIntermedia && tiempoParada) {
+        paradas.push({
+          ciudad: paradaIntermedia,
+          tiempo: parseInt(tiempoParada)
+        });
+      }
+      
+      const ruta = {
+        id: siguienteId++,
+        codigo: document.getElementById('codigo').value,
+        nombre: document.getElementById('nombre').value,
+        tipo: document.getElementById('tipo').value,
+        alcance: document.getElementById('alcance').value,
+        distancia: parseFloat(document.getElementById('distancia').value) || 0,
+        duracion: parseFloat(document.getElementById('duracion').value) || 0,
+        origen: document.getElementById('origen').value,
+        horaSalida: document.getElementById('horaSalida').value,
+        paradas: paradas,
+        destino: document.getElementById('destino').value,
+        horaLlegada: document.getElementById('horaLlegada').value,
+        estado: 'activa',
+        viajesRealizados: 0,
+        observaciones: document.getElementById('observaciones').value
+      };
+      
+      rutas.push(ruta);
+      renderizarRutas();
+      
+      const modal = bootstrap.Modal.getInstance(document.getElementById('nuevaRutaModal'));
+      modal.hide();
+      document.getElementById('formNuevaRuta').reset();
+      
+      mostrarNotificacion('Ruta creada exitosamente', 'success');
+    }
+
+    function editarRuta(id) {
+      const ruta = rutas.find(r => r.id === id);
+      if (!ruta) return;
+      
+      alert('Función de editar ruta - ID: ' + id + '\nNombre: ' + ruta.nombre);
+    }
+
+    function verDetalles(id) {
+      const ruta = rutas.find(r => r.id === id);
+      if (!ruta) return;
+      
+      let detalles = `
+        DETALLES DE LA RUTA
+        
+        Código: ${ruta.codigo}
+        Nombre: ${ruta.nombre}
+        Tipo: ${capitalize(ruta.tipo)}
+        Alcance: ${capitalize(ruta.alcance)}
+        
+        Origen: ${ruta.origen} (${ruta.horaSalida})
+        Destino: ${ruta.destino} (${ruta.horaLlegada})
+        
+        Distancia: ${ruta.distancia} km
+        Duración: ${ruta.duracion} horas
+        Viajes realizados: ${ruta.viajesRealizados}
+        
+        ${ruta.observaciones ? 'Observaciones: ' + ruta.observaciones : ''}
+      `;
+      
+      alert(detalles);
+    }
+
+    function eliminarRuta(id) {
+      if (confirm('¿Está seguro de eliminar esta ruta?')) {
+        rutas = rutas.filter(r => r.id !== id);
+        renderizarRutas();
+        mostrarNotificacion('Ruta eliminada exitosamente', 'danger');
+      }
+    }
+
+    function filtrarRutas() {
+      const buscar = document.getElementById('buscarRuta').value.toLowerCase();
+      const tipo = document.getElementById('filtroTipo').value;
+      const alcance = document.getElementById('filtroAlcance').value;
+      const estado = document.getElementById('filtroEstado').value;
+      
+      const rutasFiltradas = rutas.filter(r => {
+        const matchBuscar = !buscar || 
+          r.codigo.toLowerCase().includes(buscar) ||
+          r.nombre.toLowerCase().includes(buscar) ||
+          r.origen.toLowerCase().includes(buscar) ||
+          r.destino.toLowerCase().includes(buscar);
+        
+        const matchTipo = !tipo || r.tipo === tipo;
+        const matchAlcance = !alcance || r.alcance === alcance;
+        const matchEstado = !estado || r.estado === estado;
+        
+        return matchBuscar && matchTipo && matchAlcance && matchEstado;
+      });
+      
+      const lista = document.getElementById('listaRutas');
+      lista.innerHTML = '';
+      
+      if (rutasFiltradas.length === 0) {
+        lista.innerHTML = `
+          <div class="empty-state">
+            <i class="bi bi-search"></i>
+            <h3>No se encontraron rutas</h3>
+            <p>Intenta ajustar los filtros de búsqueda</p>
+          </div>
+        `;
+        return;
+      }
+      
+      // Renderizar solo las rutas filtradas
+      rutasFiltradas.forEach(r => {
+        const rutaDiv = document.createElement('div');
+        rutaDiv.className = 'route-timeline';
+        
+        let paradasHTML = '';
+        if (r.paradas && r.paradas.length > 0) {
+          paradasHTML = r.paradas.map(p => `
+            <div class="timeline-stop">
+              <div class="timeline-icon">
+                <i class="bi bi-pause-circle"></i>
+              </div>
+              <div class="stop-content">
+                <h6 class="stop-title">${p.ciudad}</h6>
+                <div class="stop-details">
+                  <div class="stop-detail">
+                    <i class="bi bi-clock"></i>
+                    <span>Tiempo de parada: ${p.tiempo} min</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `).join('');
+        }
+        
+        rutaDiv.innerHTML = `
+          <div class="route-header">
+            <div class="route-title-section">
+              <h3>${r.nombre}</h3>
+              <div class="route-code">Código: ${r.codigo}</div>
+            </div>
+            <div class="route-badges">
+              <span class="badge-route badge-${r.tipo}">
+                <i class="bi bi-${r.tipo === 'terrestre' ? 'truck' : 'airplane'}"></i> ${capitalize(r.tipo)}
+              </span>
+              <span class="badge-route badge-${r.alcance}">
+                <i class="bi bi-${r.alcance === 'nacional' ? 'flag' : 'globe'}"></i> ${capitalize(r.alcance)}
+              </span>
+            </div>
+          </div>
+          
+          <div class="timeline-path">
+            <div class="timeline-line"></div>
+            
+            <div class="timeline-stop">
+              <div class="timeline-icon">
+                <i class="bi bi-geo-alt-fill"></i>
+              </div>
+              <div class="stop-content">
+                <h6 class="stop-title">${r.origen}</h6>
+                <div class="stop-details">
+                  <div class="stop-detail">
+                    <i class="bi bi-clock"></i>
+                    <span>Salida: ${r.horaSalida}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            ${paradasHTML}
+            
+            <div class="timeline-stop">
+              <div class="timeline-icon destination">
+                <i class="bi bi-flag-fill"></i>
+              </div>
+              <div class="stop-content">
+                <h6 class="stop-title">${r.destino}</h6>
+                <div class="stop-details">
+                  <div class="stop-detail">
+                    <i class="bi bi-clock"></i>
+                    <span>Llegada: ${r.horaLlegada}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="route-footer">
+            <div class="route-stats">
+              <div class="stat-item">
+                <span class="stat-value">${r.distancia}</span>
+                <span class="stat-label">km</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-value">${r.duracion}</span>
+                <span class="stat-label">horas</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-value">${r.viajesRealizados}</span>
+                <span class="stat-label">viajes</span>
+              </div>
+            </div>
+            <div class="route-actions">
+              <button class="btn btn-outline-primary btn-sm" onclick="editarRuta(${r.id})">
+                <i class="bi bi-pencil"></i> Editar
+              </button>
+              <button class="btn btn-outline-info btn-sm" onclick="verDetalles(${r.id})">
+                <i class="bi bi-eye"></i> Ver
+              </button>
+              <button class="btn btn-outline-danger btn-sm" onclick="eliminarRuta(${r.id})">
+                <i class="bi bi-trash"></i>
+              </button>
+            </div>
+          </div>
+        `;
+        
+        lista.appendChild(rutaDiv);
+      });
+    }
+
+    function limpiarFiltros() {
+      document.getElementById('buscarRuta').value = '';
+      document.getElementById('filtroTipo').value = '';
+      document.getElementById('filtroAlcance').value = '';
+      document.getElementById('filtroEstado').value = '';
+      renderizarRutas();
+    }
+
+    function capitalize(str) {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    function mostrarNotificacion(mensaje, tipo = 'success') {
+      const alertDiv = document.createElement('div');
+      alertDiv.className = `alert alert-${tipo} alert-dismissible fade show position-fixed`;
+      alertDiv.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+      alertDiv.innerHTML = `
+        ${mensaje}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      `;
+      document.body.appendChild(alertDiv);
+      
+      setTimeout(() => {
+        alertDiv.remove();
+      }, 3000);
+    }
+  </script>
+</body>
+
+<footer style="background:#222; color:#fff; text-align:center; padding:20px 0;">
+  <div>
+    <p>&copy; Martin petron Maximiliano Muñoz AP-173-N4 2025.</p>
+    <p>
+      <a href="/privacidad" style="color:#aaa; text-decoration:underline;">Política de privacidad</a> |
+      <a href="/contacto" style="color:#aaa; text-decoration:underline;">Contacto</a>
+    </p>
+  </div>
+</footer>

@@ -1,0 +1,782 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cargas - Logística Global Ltda.</title>
+  
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary-color: #0b67ff;
+      --secondary-color: #00b4ff;
+      --dark-color: #0f172a;
+      --muted-color: #6b7280;
+      --success-color: #10b981;
+      --warning-color: #f59e0b;
+      --danger-color: #ef4444;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(180deg, #f7fbff 0%, #ffffff 100%);
+      min-height: 100vh;
+    }
+    
+    /* Navbar */
+    .navbar-custom {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 20px rgba(12, 24, 50, 0.08);
+      padding: 1rem 0;
+    }
+    
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--dark-color);
+    }
+    
+    .logo-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 12px rgba(11, 103, 255, 0.3);
+    }
+    
+    .brand-text h5 {
+      margin: 0;
+      font-weight: 700;
+      color: var(--dark-color);
+      font-size: 1.1rem;
+    }
+    
+    .brand-text small {
+      color: var(--muted-color);
+      font-size: 0.75rem;
+    }
+    
+    .navbar-custom .nav-link {
+      color: var(--muted-color);
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    
+    .navbar-custom .nav-link:hover,
+    .navbar-custom .nav-link.active {
+      color: var(--primary-color);
+    }
+    
+    .navbar-custom .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 1rem;
+      right: 1rem;
+      height: 3px;
+      background: var(--primary-color);
+      border-radius: 2px;
+    }
+    
+    .btn-primary-custom {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      border: none;
+      color: white;
+      font-weight: 600;
+      padding: 0.5rem 1.5rem;
+      border-radius: 8px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .btn-primary-custom:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(11, 103, 255, 0.4);
+    }
+    
+    /* Page Header */
+    .page-header {
+      background: white;
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 20px rgba(12, 24, 50, 0.06);
+    }
+    
+    .page-header h1 {
+      margin: 0;
+      font-size: 2rem;
+      color: var(--dark-color);
+    }
+    
+    .page-header p {
+      margin: 0.5rem 0 0;
+      color: var(--muted-color);
+    }
+    
+    /* Stats Cards */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .stat-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 15px rgba(12, 24, 50, 0.05);
+      border-left: 4px solid var(--primary-color);
+    }
+    
+    .stat-card.success {
+      border-left-color: var(--success-color);
+    }
+    
+    .stat-card.warning {
+      border-left-color: var(--warning-color);
+    }
+    
+    .stat-card.danger {
+      border-left-color: var(--danger-color);
+    }
+    
+    .stat-card h3 {
+      font-size: 2rem;
+      margin: 0;
+      font-weight: 700;
+      color: var(--dark-color);
+    }
+    
+    .stat-card p {
+      margin: 0.25rem 0 0;
+      color: var(--muted-color);
+      font-size: 0.9rem;
+    }
+    
+    /* Filters */
+    .filters-section {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 15px rgba(12, 24, 50, 0.05);
+    }
+    
+    /* Table */
+    .table-container {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 15px rgba(12, 24, 50, 0.05);
+    }
+    
+    .table thead {
+      background: #f8fafc;
+    }
+    
+    .table thead th {
+      border-bottom: 2px solid #e5e7eb;
+      color: var(--dark-color);
+      font-weight: 600;
+      padding: 1rem;
+    }
+    
+    .table tbody td {
+      padding: 1rem;
+      vertical-align: middle;
+    }
+    
+    .badge-pendiente {
+      background: #fef3c7;
+      color: #92400e;
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    
+    .badge-en-transito {
+      background: #dbeafe;
+      color: #1e40af;
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    
+    .badge-entregada {
+      background: #d1fae5;
+      color: #065f46;
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    
+    .badge-cancelada {
+      background: #fee2e2;
+      color: #991b1b;
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    
+    .btn-action {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.85rem;
+      border-radius: 6px;
+    }
+    
+    /* Modal */
+    .modal-header {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+    }
+    
+    .modal-header .btn-close {
+      filter: brightness(0) invert(1);
+    }
+
+    /* Alert container */
+    #alertContainer {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      z-index: 9999;
+      max-width: 400px;
+    }
+    
+    @media (max-width: 991px) {
+      .navbar-custom .nav-link.active::after {
+        display: none;
+      }
+      
+      .page-header h1 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Alert Container -->
+  <div id="alertContainer"></div>
+  <!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+  <div class="container">
+
+    <a class="navbar-brand logo-container" href="#">
+      <div class="logo-icon">LG</div>
+      <div class="brand-text">
+        <h5>Logística Global Ltda.</h5>
+        <small>Transporte terrestre y aéreo</small>
+      </div>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto align-items-lg-center">
+        
+        <li class="nav-item">
+          <a class="nav-link active" href="">
+            <i class="bi bi-house-door me-1"></i> Inicio
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'vehiculos' %}">
+            <i class="bi bi-truck me-1"></i> Vehículos
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'aeronaves' %}">
+            <i class="bi bi-airplane me-1"></i> Aeronaves
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'pilotos' %}">
+            <i class="bi bi-people me-1"></i> Pilotos
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'rutas' %}">
+            <i class="bi bi-geo-alt me-1"></i> Rutas
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'despachos' %}">
+            <i class="bi bi-box-seam me-1"></i> Despachos
+          </a>
+        </li>
+         <li class="nav-item">
+          <a class="nav-link" href="{% url 'carga' %}">
+            <i class="bi bi-box-seam me-1"></i> Carga
+          </a>
+        </li>
+         <li class="nav-item">
+          <a class="nav-link" href="{% url 'cliente' %}">
+            <i class="bi bi-truck me-1"></i> Clientes
+          </a>
+        </li>
+
+       
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+    <!-- Table -->
+    <div class="table-container">
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>ID Carga</th>
+              <th>Cliente</th>
+              <th>Origen - Destino</th>
+              <th>Tipo</th>
+              <th>Peso (kg)</th>
+              <th>Fecha Envío</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tablaCargas">
+            <!-- Se llena dinámicamente -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal Nueva Carga -->
+  <div class="modal fade" id="nuevaCargaModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="bi bi-box-seam me-2"></i>Nueva Carga</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="formNuevaCarga">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Cliente *</label>
+                <input type="text" class="form-control" id="cliente" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Tipo de Transporte *</label>
+                <select class="form-select" id="tipo" required>
+                  <option value="">Seleccionar...</option>
+                  <option value="terrestre">Terrestre</option>
+                  <option value="aereo">Aéreo</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Origen *</label>
+                <input type="text" class="form-control" id="origen" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Destino *</label>
+                <input type="text" class="form-control" id="destino" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Peso (kg) *</label>
+                <input type="number" class="form-control" id="peso" step="0.01" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Fecha de Envío *</label>
+                <input type="date" class="form-control" id="fechaEnvio" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Dimensiones (largo x ancho x alto cm)</label>
+                <input type="text" class="form-control" id="dimensiones" placeholder="100 x 50 x 30">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Estado *</label>
+                <select class="form-select" id="estado" required>
+                  <option value="pendiente">Pendiente</option>
+                  <option value="en-transito">En Tránsito</option>
+                  <option value="entregada">Entregada</option>
+                  <option value="cancelada">Cancelada</option>
+                </select>
+              </div>
+              <div class="col-md-12">
+                <label class="form-label">Descripción de la Carga</label>
+                <textarea class="form-control" id="descripcion" rows="2"></textarea>
+              </div>
+              <div class="col-12">
+                <label class="form-label">Observaciones</label>
+                <textarea class="form-control" id="observaciones" rows="3"></textarea>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" onclick="guardarCarga()">
+            <i class="bi bi-check-circle me-2"></i>Guardar Carga
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Editar Carga -->
+  <div class="modal fade" id="editarCargaModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="bi bi-pencil me-2"></i>Editar Carga</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="formEditarCarga">
+            <input type="hidden" id="editId">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Cliente *</label>
+                <input type="text" class="form-control" id="editCliente" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Tipo de Transporte *</label>
+                <select class="form-select" id="editTipo" required>
+                  <option value="terrestre">Terrestre</option>
+                  <option value="aereo">Aéreo</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Origen *</label>
+                <input type="text" class="form-control" id="editOrigen" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Destino *</label>
+                <input type="text" class="form-control" id="editDestino" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Peso (kg) *</label>
+                <input type="number" class="form-control" id="editPeso" step="0.01" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Fecha de Envío *</label>
+                <input type="date" class="form-control" id="editFechaEnvio" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Dimensiones</label>
+                <input type="text" class="form-control" id="editDimensiones">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Estado *</label>
+                <select class="form-select" id="editEstado" required>
+                  <option value="pendiente">Pendiente</option>
+                  <option value="en-transito">En Tránsito</option>
+                  <option value="entregada">Entregada</option>
+                  <option value="cancelada">Cancelada</option>
+                </select>
+              </div>
+              <div class="col-md-12">
+                <label class="form-label">Descripción de la Carga</label>
+                <textarea class="form-control" id="editDescripcion" rows="2"></textarea>
+              </div>
+              <div class="col-12">
+                <label class="form-label">Observaciones</label>
+                <textarea class="form-control" id="editObservaciones" rows="3"></textarea>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" onclick="actualizarCarga()">
+            <i class="bi bi-check-circle me-2"></i>Actualizar Carga
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    let cargas = [
+      {
+        id: 'CRG-001',
+        cliente: 'Transportes del Sur S.A.',
+        tipo: 'terrestre',
+        origen: 'Santiago',
+        destino: 'Valparaíso',
+        peso: 1500,
+        dimensiones: '200 x 100 x 80',
+        fechaEnvio: '2024-11-15',
+        estado: 'en-transito',
+        descripcion: 'Electrodomésticos varios',
+        observaciones: 'Entrega programada para mañana'
+      },
+      {
+        id: 'CRG-002',
+        cliente: 'María González López',
+        tipo: 'aereo',
+        origen: 'Santiago',
+        destino: 'Buenos Aires',
+        peso: 250,
+        dimensiones: '80 x 60 x 40',
+        fechaEnvio: '2024-11-17',
+        estado: 'pendiente',
+        descripcion: 'Documentos y muestras',
+        observaciones: 'Urgente, requiere manejo delicado'
+      },
+      {
+        id: 'CRG-003',
+        cliente: 'Comercial Pérez Ltda.',
+        tipo: 'terrestre',
+        origen: 'Concepción',
+        destino: 'Santiago',
+        peso: 3200,
+        dimensiones: '300 x 150 x 120',
+        fechaEnvio: '2024-11-10',
+        estado: 'entregada',
+        descripcion: 'Materiales de construcción',
+        observaciones: 'Entregado sin novedad'
+      }
+    ];
+
+    let siguienteId = 4;
+
+    // Inicializar
+    document.addEventListener('DOMContentLoaded', function() {
+      cargarCargas();
+      actualizarEstadisticas();
+      
+      // Event listeners para filtros
+      document.getElementById('buscarCarga').addEventListener('input', filtrarCargas);
+      document.getElementById('filtroEstado').addEventListener('change', filtrarCargas);
+      document.getElementById('filtroTipo').addEventListener('change', filtrarCargas);
+    });
+
+    function mostrarNotificacion(mensaje, tipo = 'success') {
+      const alertContainer = document.getElementById('alertContainer');
+      const alertDiv = document.createElement('div');
+      alertDiv.className = `alert alert-${tipo} alert-dismissible fade show`;
+      alertDiv.role = 'alert';
+      alertDiv.innerHTML = `
+        <i class="bi bi-check-circle-fill me-2"></i>${mensaje}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      `;
+      alertContainer.appendChild(alertDiv);
+      setTimeout(() => {
+        alertDiv.classList.remove('show');
+        setTimeout(() => alertDiv.remove(), 150);
+      }, 3000);
+    }
+
+    function cargarCargas() {
+      const tbody = document.getElementById('tablaCargas');
+      tbody.innerHTML = '';
+      
+      cargas.forEach(c => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${c.id}</strong></td>
+          <td>${c.cliente}</td>
+          <td>${c.origen} → ${c.destino}</td>
+          <td><span class="badge bg-info">${capitalize(c.tipo)}</span></td>
+          <td>${c.peso.toLocaleString()} kg</td>
+          <td>${formatearFecha(c.fechaEnvio)}</td>
+          <td><span class="badge-${c.estado}">${capitalize(c.estado.replace('-', ' '))}</span></td>
+          <td>
+            <button class="btn btn-sm btn-outline-primary btn-action me-1" onclick="editarCarga('${c.id}')" title="Editar">
+              <i class="bi bi-pencil"></i>
+            </button>
+            <button class="btn btn-sm btn-outline-danger btn-action" onclick="eliminarCarga('${c.id}')" title="Eliminar">
+              <i class="bi bi-trash"></i>
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function actualizarEstadisticas() {
+      document.getElementById('totalCargas').textContent = cargas.length;
+      document.getElementById('cargasPendientes').textContent = cargas.filter(c => c.estado === 'pendiente').length;
+      document.getElementById('cargasEnTransito').textContent = cargas.filter(c => c.estado === 'en-transito').length;
+      document.getElementById('cargasEntregadas').textContent = cargas.filter(c => c.estado === 'entregada').length;
+    }
+
+    function guardarCarga() {
+      const form = document.getElementById('formNuevaCarga');
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      const carga = {
+        id: `CRG-${String(siguienteId++).padStart(3, '0')}`,
+        cliente: document.getElementById('cliente').value,
+        tipo: document.getElementById('tipo').value,
+        origen: document.getElementById('origen').value,
+        destino: document.getElementById('destino').value,
+        peso: parseFloat(document.getElementById('peso').value),
+        dimensiones: document.getElementById('dimensiones').value,
+        fechaEnvio: document.getElementById('fechaEnvio').value,
+        estado: document.getElementById('estado').value,
+        descripcion: document.getElementById('descripcion').value,
+        observaciones: document.getElementById('observaciones').value
+      };
+      
+      cargas.push(carga);
+      cargarCargas();
+      actualizarEstadisticas();
+      
+      bootstrap.Modal.getInstance(document.getElementById('nuevaCargaModal')).hide();
+      form.reset();
+      mostrarNotificacion('✓ Carga agregada exitosamente', 'success');
+    }
+
+    function editarCarga(id) {
+      const carga = cargas.find(c => c.id === id);
+      if (!carga) return;
+      
+      document.getElementById('editId').value = carga.id;
+      document.getElementById('editCliente').value = carga.cliente;
+      document.getElementById('editTipo').value = carga.tipo;
+      document.getElementById('editOrigen').value = carga.origen;
+      document.getElementById('editDestino').value = carga.destino;
+      document.getElementById('editPeso').value = carga.peso;
+      document.getElementById('editDimensiones').value = carga.dimensiones;
+      document.getElementById('editFechaEnvio').value = carga.fechaEnvio;
+      document.getElementById('editEstado').value = carga.estado;
+      document.getElementById('editDescripcion').value = carga.descripcion;
+      document.getElementById('editObservaciones').value = carga.observaciones;
+      
+      new bootstrap.Modal(document.getElementById('editarCargaModal')).show();
+    }
+
+    function actualizarCarga() {
+      const id = document.getElementById('editId').value;
+      const index = cargas.findIndex(c => c.id === id);
+      
+      if (index !== -1) {
+        cargas[index] = {
+          ...cargas[index],
+          cliente: document.getElementById('editCliente').value,
+          tipo: document.getElementById('editTipo').value,
+          origen: document.getElementById('editOrigen').value,
+          destino: document.getElementById('editDestino').value,
+          peso: parseFloat(document.getElementById('editPeso').value),
+          dimensiones: document.getElementById('editDimensiones').value,
+          fechaEnvio: document.getElementById('editFechaEnvio').value,
+          estado: document.getElementById('editEstado').value,
+          descripcion: document.getElementById('editDescripcion').value,
+          observaciones: document.getElementById('editObservaciones').value
+        };
+        
+        cargarCargas();
+        actualizarEstadisticas();
+        
+        bootstrap.Modal.getInstance(document.getElementById('editarCargaModal')).hide();
+        mostrarNotificacion('✓ Carga actualizada exitosamente', 'info');
+      }
+    }
+
+    function eliminarCarga(id) {
+      if (confirm('¿Está seguro de eliminar esta carga?')) {
+        cargas = cargas.filter(c => c.id !== id);
+        cargarCargas();
+        actualizarEstadisticas();
+        mostrarNotificacion('✓ Carga eliminada exitosamente', 'danger');
+      }
+    }
+
+    function filtrarCargas() {
+      const buscar = document.getElementById('buscarCarga').value.toLowerCase();
+      const estado = document.getElementById('filtroEstado').value;
+      const tipo = document.getElementById('filtroTipo').value;
+      
+      const tbody = document.getElementById('tablaCargas');
+      const filas = tbody.getElementsByTagName('tr');
+      
+      Array.from(filas).forEach((fila, index) => {
+        const carga = cargas[index];
+        let mostrar = true;
+        
+        if (buscar && !carga.id.toLowerCase().includes(buscar) && 
+            !carga.cliente.toLowerCase().includes(buscar)) {
+          mostrar = false;
+        }
+        
+        if (estado && carga.estado !== estado) {
+          mostrar = false;
+        }
+        
+        if (tipo && carga.tipo !== tipo) {
+          mostrar = false;
+        }
+        
+        fila.style.display = mostrar ? '' : 'none';
+      });
+    }
+
+    function limpiarFiltros() {
+      document.getElementById('buscarCarga').value = '';
+      document.getElementById('filtroEstado').value = '';
+      document.getElementById('filtroTipo').value = '';
+      filtrarCargas();
+    }
+
+    function exportarDatos() {
+      mostrarNotificacion('Función de exportación en desarrollo', 'info');
+    }
+
+    function capitalize(str) {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    function formatearFecha(fecha) {
+      if (!fecha) return 'N/A';
+      const date = new Date(fecha);
+      return date.toLocaleDateString('es-CL', { 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric' 
+      });
+    }
+  </script>
+</body>
+</html>
+<footer style="background:#222; color:#fff; text-align:center; padding:20px 0;">
+  <div>
+    <p>&copy; Martin petron Maximiliano Muñoz AP-173-N4 2025.</p>
+    <p>
+      <a href="/privacidad" style="color:#aaa; text-decoration:underline;">Política de privacidad</a> |
+      <a href="/contacto" style="color:#aaa; text-decoration:underline;">Contacto</a>
+    </p>
+  </div>
+</footer>

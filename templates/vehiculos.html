@@ -1,0 +1,831 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vehículos - Logística Global Ltda.</title>
+  
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary-color: #0b67ff;
+      --secondary-color: #00b4ff;
+      --dark-color: #0f172a;
+      --muted-color: #6b7280;
+      --success-color: #10b981;
+      --warning-color: #f59e0b;
+      --danger-color: #ef4444;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(180deg, #f7fbff 0%, #ffffff 100%);
+      min-height: 100vh;
+    }
+    
+    /* Navbar */
+    .navbar-custom {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 20px rgba(12, 24, 50, 0.08);
+      padding: 1rem 0;
+    }
+    
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .logo-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 12px rgba(11, 103, 255, 0.3);
+    }
+    
+    .brand-text h5 {
+      margin: 0;
+      font-weight: 700;
+      color: var(--dark-color);
+      font-size: 1.1rem;
+    }
+    
+    .brand-text small {
+      color: var(--muted-color);
+      font-size: 0.75rem;
+    }
+    
+    .navbar-custom .nav-link {
+      color: var(--muted-color);
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    
+    .navbar-custom .nav-link:hover,
+    .navbar-custom .nav-link.active {
+      color: var(--primary-color);
+    }
+    
+    .navbar-custom .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 1rem;
+      right: 1rem;
+      height: 3px;
+      background: var(--primary-color);
+      border-radius: 2px;
+    }
+    
+    .btn-primary-custom {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      border: none;
+      color: white;
+      font-weight: 600;
+      padding: 0.5rem 1.5rem;
+      border-radius: 8px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .btn-primary-custom:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(11, 103, 255, 0.4);
+    }
+    
+    /* Page Header */
+    .page-header {
+      background: white;
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 20px rgba(12, 24, 50, 0.06);
+    }
+    
+    .page-header h1 {
+      margin: 0;
+      font-size: 2rem;
+      color: var(--dark-color);
+    }
+    
+    .page-header p {
+      margin: 0.5rem 0 0;
+      color: var(--muted-color);
+    }
+    
+    /* Stats Cards */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .stat-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 15px rgba(12, 24, 50, 0.05);
+      border-left: 4px solid var(--primary-color);
+    }
+    
+    .stat-card.success {
+      border-left-color: var(--success-color);
+    }
+    
+    .stat-card.warning {
+      border-left-color: var(--warning-color);
+    }
+    
+    .stat-card.danger {
+      border-left-color: var(--danger-color);
+    }
+    
+    .stat-card h3 {
+      font-size: 2rem;
+      margin: 0;
+      font-weight: 700;
+      color: var(--dark-color);
+    }
+    
+    .stat-card p {
+      margin: 0.25rem 0 0;
+      color: var(--muted-color);
+      font-size: 0.9rem;
+    }
+    
+    /* Filters and Actions */
+    .filters-section {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 15px rgba(12, 24, 50, 0.05);
+    }
+    
+    /* Table */
+    .table-container {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 15px rgba(12, 24, 50, 0.05);
+    }
+    
+    .table {
+      margin-bottom: 0;
+    }
+    
+    .table thead {
+      background: #f8fafc;
+    }
+    
+    .table thead th {
+      border-bottom: 2px solid #e5e7eb;
+      color: var(--dark-color);
+      font-weight: 600;
+      padding: 1rem;
+    }
+    
+    .table tbody td {
+      padding: 1rem;
+      vertical-align: middle;
+    }
+    
+    .badge-status {
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    
+    .badge-disponible {
+      background: #d1fae5;
+      color: #065f46;
+    }
+    
+    .badge-en-ruta {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+    
+    .badge-mantenimiento {
+      background: #fef3c7;
+      color: #92400e;
+    }
+    
+    .badge-fuera-servicio {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+    
+    .btn-action {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.85rem;
+      border-radius: 6px;
+    }
+    
+    /* Modal customization */
+    .modal-header {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+    }
+    
+    .modal-header .btn-close {
+      filter: brightness(0) invert(1);
+    }
+
+    /* Alert container */
+    #alertContainer {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      z-index: 9999;
+      max-width: 400px;
+    }
+    
+    /* Responsive */
+    @media (max-width: 991px) {
+      .navbar-custom .nav-link.active::after {
+        display: none;
+      }
+      
+      .table-container {
+        overflow-x: auto;
+      }
+      
+      .page-header h1 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Alert Container -->
+  <div id="alertContainer"></div>
+
+   <!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+  <div class="container">
+
+    <a class="navbar-brand logo-container" href="#">
+      <div class="logo-icon">LG</div>
+      <div class="brand-text">
+        <h5>Logística Global Ltda.</h5>
+        <small>Transporte terrestre y aéreo</small>
+      </div>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto align-items-lg-center">
+        
+        <li class="nav-item">
+          <a class="nav-link active" href="">
+            <i class="bi bi-house-door me-1"></i> Inicio
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'vehiculos' %}">
+            <i class="bi bi-truck me-1"></i> Vehículos
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'aeronaves' %}">
+            <i class="bi bi-airplane me-1"></i> Aeronaves
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'pilotos' %}">
+            <i class="bi bi-people me-1"></i> Pilotos
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'rutas' %}">
+            <i class="bi bi-geo-alt me-1"></i> Rutas
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'despachos' %}">
+            <i class="bi bi-box-seam me-1"></i> Despachos
+          </a>
+        </li>
+         <li class="nav-item">
+          <a class="nav-link" href="{% url 'carga' %}">
+            <i class="bi bi-box-seam me-1"></i> Carga
+          </a>
+        </li>
+         <li class="nav-item">
+          <a class="nav-link" href="{% url 'cliente' %}">
+            <i class="bi bi-truck me-1"></i> Clientes
+          </a>
+        </li>
+
+       
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3 id="totalVehiculos">0</h3>
+        <p>Total Vehículos</p>
+      </div>
+      <div class="stat-card success">
+        <h3 id="disponibles">0</h3>
+        <p>Disponibles</p>
+      </div>
+      <div class="stat-card warning">
+        <h3 id="mantenimiento">0</h3>
+        <p>En Mantenimiento</p>
+      </div>
+      <div class="stat-card danger">
+        <h3 id="fueraServicio">0</h3>
+        <p>Fuera de Servicio</p>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="filters-section">
+      <div class="row g-3">
+        <div class="col-md-3">
+          <input type="text" class="form-control" id="buscarVehiculo" placeholder="Buscar por patente o marca...">
+        </div>
+        <div class="col-md-2">
+          <select class="form-select" id="filtroEstado">
+            <option value="">Todos los estados</option>
+            <option value="disponible">Disponible</option>
+            <option value="en-ruta">En Ruta</option>
+            <option value="mantenimiento">Mantenimiento</option>
+            <option value="fuera-servicio">Fuera de Servicio</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <select class="form-select" id="filtroTipo">
+            <option value="">Todos los tipos</option>
+            <option value="camion">Camión</option>
+            <option value="camioneta">Camioneta</option>
+            <option value="furgon">Furgón</option>
+            <option value="trailer">Tráiler</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <input type="text" class="form-control" id="filtroAnio" placeholder="Año...">
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-secondary w-100" onclick="limpiarFiltros()">
+            <i class="bi bi-x-circle me-1"></i>Limpiar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-container">
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Patente</th>
+              <th>Tipo</th>
+              <th>Marca/Modelo</th>
+              <th>Año</th>
+              <th>Capacidad</th>
+              <th>Estado</th>
+              <th>Último Mantenimiento</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tablaVehiculos">
+            <!-- Se llena dinámicamente -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal Nuevo Vehículo -->
+  <div class="modal fade" id="nuevoVehiculoModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="bi bi-truck me-2"></i>Nuevo Vehículo</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="formNuevoVehiculo">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Patente *</label>
+                <input type="text" class="form-control" id="patente" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Tipo *</label>
+                <select class="form-select" id="tipo" required>
+                  <option value="">Seleccionar...</option>
+                  <option value="camion">Camión</option>
+                  <option value="camioneta">Camioneta</option>
+                  <option value="furgon">Furgón</option>
+                  <option value="trailer">Tráiler</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Marca *</label>
+                <input type="text" class="form-control" id="marca" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Modelo *</label>
+                <input type="text" class="form-control" id="modelo" required>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Año *</label>
+                <input type="number" class="form-control" id="anio" min="1990" max="2025" required>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Capacidad (kg)</label>
+                <input type="number" class="form-control" id="capacidad" step="0.01">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Estado *</label>
+                <select class="form-select" id="estado" required>
+                  <option value="disponible">Disponible</option>
+                  <option value="en-ruta">En Ruta</option>
+                  <option value="mantenimiento">Mantenimiento</option>
+                  <option value="fuera-servicio">Fuera de Servicio</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <label class="form-label">Observaciones</label>
+                <textarea class="form-control" id="observaciones" rows="3"></textarea>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" onclick="guardarVehiculo()">Guardar Vehículo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Editar Vehículo -->
+  <div class="modal fade" id="editarVehiculoModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="bi bi-pencil me-2"></i>Editar Vehículo</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="formEditarVehiculo">
+            <input type="hidden" id="editId">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Patente *</label>
+                <input type="text" class="form-control" id="editPatente" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Tipo *</label>
+                <select class="form-select" id="editTipo" required>
+                  <option value="camion">Camión</option>
+                  <option value="camioneta">Camioneta</option>
+                  <option value="furgon">Furgón</option>
+                  <option value="trailer">Tráiler</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Marca *</label>
+                <input type="text" class="form-control" id="editMarca" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Modelo *</label>
+                <input type="text" class="form-control" id="editModelo" required>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Año *</label>
+                <input type="number" class="form-control" id="editAnio" min="1990" max="2025" required>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Capacidad (kg)</label>
+                <input type="number" class="form-control" id="editCapacidad" step="0.01">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Estado *</label>
+                <select class="form-select" id="editEstado" required>
+                  <option value="disponible">Disponible</option>
+                  <option value="en-ruta">En Ruta</option>
+                  <option value="mantenimiento">Mantenimiento</option>
+                  <option value="fuera-servicio">Fuera de Servicio</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <label class="form-label">Observaciones</label>
+                <textarea class="form-control" id="editObservaciones" rows="3"></textarea>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" onclick="actualizarVehiculo()">Actualizar Vehículo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    // Base de datos en memoria
+    let vehiculos = [
+      {
+        id: 1,
+        patente: 'ABCD-12',
+        tipo: 'camion',
+        marca: 'Mercedes-Benz',
+        modelo: 'Actros 2646',
+        anio: 2022,
+        capacidad: 25000,
+        estado: 'disponible',
+        ultimoMantenimiento: '2024-10-15',
+        observaciones: 'Vehículo en perfectas condiciones'
+      },
+      {
+        id: 2,
+        patente: 'EFGH-34',
+        tipo: 'furgon',
+        marca: 'Ford',
+        modelo: 'Transit',
+        anio: 2021,
+        capacidad: 1500,
+        estado: 'en-ruta',
+        ultimoMantenimiento: '2024-09-20',
+        observaciones: 'Entrega programada para mañana'
+      },
+      {
+        id: 3,
+        patente: 'IJKL-56',
+        tipo: 'trailer',
+        marca: 'Volvo',
+        modelo: 'FH16',
+        anio: 2023,
+        capacidad: 40000,
+        estado: 'mantenimiento',
+        ultimoMantenimiento: '2024-11-10',
+        observaciones: 'Cambio de neumáticos programado'
+      }
+    ];
+
+    let siguienteId = 4;
+
+    // Inicializar
+    document.addEventListener('DOMContentLoaded', function() {
+      cargarVehiculos();
+      actualizarEstadisticas();
+      
+      // Event listeners para filtros
+      document.getElementById('buscarVehiculo').addEventListener('input', filtrarVehiculos);
+      document.getElementById('filtroEstado').addEventListener('change', filtrarVehiculos);
+      document.getElementById('filtroTipo').addEventListener('change', filtrarVehiculos);
+      document.getElementById('filtroAnio').addEventListener('input', filtrarVehiculos);
+    });
+
+    // Función para mostrar notificaciones
+    function mostrarNotificacion(mensaje, tipo = 'success') {
+      const alertContainer = document.getElementById('alertContainer');
+      const alertDiv = document.createElement('div');
+      alertDiv.className = `alert alert-${tipo} alert-dismissible fade show`;
+      alertDiv.role = 'alert';
+      alertDiv.innerHTML = `
+        <i class="bi bi-check-circle-fill me-2"></i>${mensaje}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      `;
+      alertContainer.appendChild(alertDiv);
+      
+      setTimeout(() => {
+        alertDiv.classList.remove('show');
+        setTimeout(() => alertDiv.remove(), 150);
+      }, 3000);
+    }
+
+    function cargarVehiculos() {
+      const tbody = document.getElementById('tablaVehiculos');
+      tbody.innerHTML = '';
+      
+      vehiculos.forEach(v => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${v.patente}</strong></td>
+          <td>${capitalize(v.tipo)}</td>
+          <td>${v.marca} ${v.modelo}</td>
+          <td>${v.anio}</td>
+          <td>${v.capacidad ? v.capacidad.toLocaleString() + ' kg' : 'N/A'}</td>
+          <td><span class="badge-status badge-${v.estado}">${capitalize(v.estado.replace('-', ' '))}</span></td>
+          <td>${formatearFecha(v.ultimoMantenimiento)}</td>
+          <td>
+            <button class="btn btn-sm btn-outline-primary btn-action me-1" onclick="editarVehiculo(${v.id})" title="Editar">
+              <i class="bi bi-pencil"></i>
+            </button>
+            <button class="btn btn-sm btn-outline-danger btn-action" onclick="eliminarVehiculo(${v.id})" title="Eliminar">
+              <i class="bi bi-trash"></i>
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function actualizarEstadisticas() {
+      document.getElementById('totalVehiculos').textContent = vehiculos.length;
+      document.getElementById('disponibles').textContent = vehiculos.filter(v => v.estado === 'disponible').length;
+      document.getElementById('mantenimiento').textContent = vehiculos.filter(v => v.estado === 'mantenimiento').length;
+      document.getElementById('fueraServicio').textContent = vehiculos.filter(v => v.estado === 'fuera-servicio').length;
+    }
+
+    // FUNCIÓN GUARDAR VEHÍCULO - AHORA COMPLETA Y FUNCIONAL
+    function guardarVehiculo() {
+      // Validar formulario
+      const form = document.getElementById('formNuevoVehiculo');
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      const vehiculo = {
+        id: siguienteId++,
+        patente: document.getElementById('patente').value.toUpperCase(),
+        tipo: document.getElementById('tipo').value,
+        marca: document.getElementById('marca').value,
+        modelo: document.getElementById('modelo').value,
+        anio: parseInt(document.getElementById('anio').value),
+        capacidad: parseFloat(document.getElementById('capacidad').value) || 0,
+        estado: document.getElementById('estado').value,
+        ultimoMantenimiento: new Date().toISOString().split('T')[0],
+        observaciones: document.getElementById('observaciones').value
+      };
+      
+      vehiculos.push(vehiculo);
+      cargarVehiculos();
+      actualizarEstadisticas();
+      
+      // Cerrar modal
+      const modal = bootstrap.Modal.getInstance(document.getElementById('nuevoVehiculoModal'));
+      modal.hide();
+      
+      // Limpiar formulario
+      form.reset();
+      
+      // Mostrar notificación
+      mostrarNotificacion('✓ Vehículo agregado exitosamente', 'success');
+    }
+
+    function editarVehiculo(id) {
+      const vehiculo = vehiculos.find(v => v.id === id);
+      if (!vehiculo) return;
+      
+      document.getElementById('editId').value = vehiculo.id;
+      document.getElementById('editPatente').value = vehiculo.patente;
+      document.getElementById('editTipo').value = vehiculo.tipo;
+      document.getElementById('editMarca').value = vehiculo.marca;
+      document.getElementById('editModelo').value = vehiculo.modelo;
+      document.getElementById('editAnio').value = vehiculo.anio;
+      document.getElementById('editCapacidad').value = vehiculo.capacidad;
+      document.getElementById('editEstado').value = vehiculo.estado;
+      document.getElementById('editObservaciones').value = vehiculo.observaciones;
+      
+      new bootstrap.Modal(document.getElementById('editarVehiculoModal')).show();
+    }
+
+    function actualizarVehiculo() {
+      const id = parseInt(document.getElementById('editId').value);
+      const index = vehiculos.findIndex(v => v.id === id);
+      
+      if (index !== -1) {
+        vehiculos[index] = {
+          ...vehiculos[index],
+          patente: document.getElementById('editPatente').value.toUpperCase(),
+          tipo: document.getElementById('editTipo').value,
+          marca: document.getElementById('editMarca').value,
+          modelo: document.getElementById('editModelo').value,
+          anio: parseInt(document.getElementById('editAnio').value),
+          capacidad: parseFloat(document.getElementById('editCapacidad').value) || 0,
+          estado: document.getElementById('editEstado').value,
+          observaciones: document.getElementById('editObservaciones').value
+        };
+        
+        cargarVehiculos();
+        actualizarEstadisticas();
+        
+        bootstrap.Modal.getInstance(document.getElementById('editarVehiculoModal')).hide();
+        mostrarNotificacion('✓ Vehículo actualizado exitosamente', 'info');
+      }
+    }
+
+    function eliminarVehiculo(id) {
+      if (confirm('¿Está seguro de eliminar este vehículo?')) {
+        vehiculos = vehiculos.filter(v => v.id !== id);
+        cargarVehiculos();
+        actualizarEstadisticas();
+        mostrarNotificacion('✓ Vehículo eliminado exitosamente', 'danger');
+      }
+    }
+
+    function filtrarVehiculos() {
+      const buscar = document.getElementById('buscarVehiculo').value.toLowerCase();
+      const estado = document.getElementById('filtroEstado').value;
+      const tipo = document.getElementById('filtroTipo').value;
+      const anio = document.getElementById('filtroAnio').value;
+      
+      const tbody = document.getElementById('tablaVehiculos');
+      const filas = tbody.getElementsByTagName('tr');
+      
+      Array.from(filas).forEach((fila, index) => {
+        const vehiculo = vehiculos[index];
+        let mostrar = true;
+        
+        if (buscar && !vehiculo.patente.toLowerCase().includes(buscar) && 
+            !vehiculo.marca.toLowerCase().includes(buscar)) {
+          mostrar = false;
+        }
+        
+        if (estado && vehiculo.estado !== estado) {
+          mostrar = false;
+        }
+        
+        if (tipo && vehiculo.tipo !== tipo) {
+          mostrar = false;
+        }
+        
+        if (anio && vehiculo.anio.toString() !== anio) {
+          mostrar = false;
+        }
+        
+        fila.style.display = mostrar ? '' : 'none';
+      });
+    }
+
+    function limpiarFiltros() {
+      document.getElementById('buscarVehiculo').value = '';
+      document.getElementById('filtroEstado').value = '';
+      document.getElementById('filtroTipo').value = '';
+      document.getElementById('filtroAnio').value = '';
+      cargarVehiculos();
+    }
+
+    function exportarDatos() {
+      mostrarNotificacion('Función de exportación en desarrollo', 'info');
+    }
+
+    // Funciones auxiliares
+    function capitalize(str) {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    function formatearFecha(fecha) {
+      if (!fecha) return 'N/A';
+      const date = new Date(fecha);
+      return date.toLocaleDateString('es-CL', { 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric' 
+      });
+    }
+  </script>
+</body>
+</html>
+<footer style="background:#222; color:#fff; text-align:center; padding:20px 0;">
+  <div>
+    <p>&copy; Martin petron Maximiliano Muñoz AP-173-N4 2025.</p>
+    <p>
+      <a href="/privacidad" style="color:#aaa; text-decoration:underline;">Política de privacidad</a> |
+      <a href="/contacto" style="color:#aaa; text-decoration:underline;">Contacto</a>
+    </p>
+  </div>
+</footer>

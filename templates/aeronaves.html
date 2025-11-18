@@ -1,0 +1,913 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aeronaves - Logística Global Ltda.</title>
+  
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary-color: #0b67ff;
+      --secondary-color: #00b4ff;
+      --dark-color: #0f172a;
+      --muted-color: #6b7280;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(180deg, #f7fbff 0%, #ffffff 100%);
+      min-height: 100vh;
+    }
+    
+    /* Navbar */
+    .navbar-custom {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 20px rgba(12, 24, 50, 0.08);
+      padding: 1rem 0;
+    }
+    
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .logo-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 12px rgba(11, 103, 255, 0.3);
+    }
+    
+    .brand-text h5 {
+      margin: 0;
+      font-weight: 700;
+      color: var(--dark-color);
+      font-size: 1.1rem;
+    }
+    
+    .brand-text small {
+      color: var(--muted-color);
+      font-size: 0.75rem;
+    }
+    
+    .navbar-custom .nav-link {
+      color: var(--muted-color);
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    
+    .navbar-custom .nav-link:hover,
+    .navbar-custom .nav-link.active {
+      color: var(--primary-color);
+    }
+    
+    .navbar-custom .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 1rem;
+      right: 1rem;
+      height: 3px;
+      background: var(--primary-color);
+      border-radius: 2px;
+    }
+    
+    .btn-primary-custom {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      border: none;
+      color: white;
+      font-weight: 600;
+      padding: 0.5rem 1.5rem;
+      border-radius: 8px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .btn-primary-custom:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(11, 103, 255, 0.4);
+    }
+    
+    /* Hero Section */
+    .hero-section {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 4rem 0;
+      margin-bottom: 3rem;
+      border-radius: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 50%;
+      height: 100%;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="rgba(255,255,255,0.1)"/></svg>');
+      opacity: 0.3;
+    }
+    
+    .hero-section h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    
+    /* Cards Grid */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    
+    .aeronave-card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .aeronave-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+    
+    .card-header-custom {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 2rem;
+      position: relative;
+    }
+    
+    .card-header-custom .icon-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 50px;
+      height: 50px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+    
+    .card-body-custom {
+      padding: 1.5rem;
+    }
+    
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .info-row:last-child {
+      border-bottom: none;
+    }
+    
+    .info-label {
+      color: var(--muted-color);
+      font-size: 0.9rem;
+    }
+    
+    .info-value {
+      font-weight: 600;
+      color: var(--dark-color);
+    }
+    
+    .status-badge {
+      display: inline-block;
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    
+    .status-operativa {
+      background: #d1fae5;
+      color: #065f46;
+    }
+    
+    .status-mantenimiento {
+      background: #fef3c7;
+      color: #92400e;
+    }
+    
+    .status-en-vuelo {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+    
+    .card-actions {
+      display: flex;
+      gap: 0.5rem;
+      padding: 1rem 1.5rem;
+      background: #f8fafc;
+    }
+    
+    /* Search and Filter Bar */
+    .filter-bar {
+      background: white;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      margin-bottom: 2rem;
+    }
+    
+    /* Stats Dashboard */
+    .stats-dashboard {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    
+    .stat-box {
+      background: white;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .stat-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .stat-box h2 {
+      font-size: 3rem;
+      font-weight: 700;
+      margin: 0;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .stat-box p {
+      color: var(--muted-color);
+      margin: 0.5rem 0 0;
+    }
+    
+    /* Modal Custom */
+    .modal-content {
+      border: none;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    
+    .modal-header-custom {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 2rem;
+    }
+    
+    .modal-header-custom .btn-close {
+      filter: brightness(0) invert(1);
+    }
+
+    /* Alert container */
+    #alertContainer {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      z-index: 9999;
+      max-width: 400px;
+    }
+    
+    /* Responsive */
+    @media (max-width: 991px) {
+      .navbar-custom .nav-link.active::after {
+        display: none;
+      }
+      
+      .hero-section h1 {
+        font-size: 2rem;
+      }
+      
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Alert Container -->
+  <div id="alertContainer"></div>
+
+  <!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+  <div class="container">
+
+    <a class="navbar-brand logo-container" href="#">
+      <div class="logo-icon">LG</div>
+      <div class="brand-text">
+        <h5>Logística Global Ltda.</h5>
+        <small>Transporte terrestre y aéreo</small>
+      </div>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto align-items-lg-center">
+        
+        <li class="nav-item">
+          <a class="nav-link active" href="">
+            <i class="bi bi-house-door me-1"></i> Inicio
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'vehiculos' %}">
+            <i class="bi bi-truck me-1"></i> Vehículos
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'aeronaves' %}">
+            <i class="bi bi-airplane me-1"></i> Aeronaves
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'pilotos' %}">
+            <i class="bi bi-people me-1"></i> Pilotos
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'rutas' %}">
+            <i class="bi bi-geo-alt me-1"></i> Rutas
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'despachos' %}">
+            <i class="bi bi-box-seam me-1"></i> Despachos
+          </a>
+        </li>
+         <li class="nav-item">
+          <a class="nav-link" href="{% url 'carga' %}">
+            <i class="bi bi-box-seam me-1"></i> Carga
+          </a>
+        </li>
+         <li class="nav-item">
+          <a class="nav-link" href="{% url 'cliente' %}">
+            <i class="bi bi-truck me-1"></i> Clientes
+          </a>
+        </li>
+
+       
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  <!-- Main Content -->
+  <main class="container my-4">
+    <!-- Hero Section -->
+    <div class="hero-section">
+      <div class="container position-relative">
+        <h1><i class="bi bi-airplane-engines me-3"></i>Flota Aérea</h1>
+        <p class="lead">Gestiona todas tus aeronaves, certificaciones y operaciones internacionales desde un solo lugar</p>
+      </div>
+    </div>
+
+    <!-- Stats Dashboard -->
+    <div class="stats-dashboard">
+      <div class="stat-box">
+        <h2 id="totalAeronaves">0</h2>
+        <p>Total de Aeronaves</p>
+      </div>
+      <div class="stat-box">
+        <h2 id="operativas">0</h2>
+        <p>Operativas</p>
+      </div>
+      <div class="stat-box">
+        <h2 id="enVuelo">0</h2>
+        <p>En Vuelo</p>
+      </div>
+      <div class="stat-box">
+        <h2 id="mantenimiento">0</h2>
+        <p>Mantenimiento</p>
+      </div>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <div class="row g-3 align-items-end">
+        <div class="col-md-4">
+          <label class="form-label fw-bold">Buscar Aeronave</label>
+          <input type="text" class="form-control form-control-lg" id="buscarAeronave" placeholder="Matrícula, modelo o fabricante...">
+        </div>
+        <div class="col-md-3">
+          <label class="form-label fw-bold">Estado</label>
+          <select class="form-select form-select-lg" id="filtroEstado">
+            <option value="">Todos</option>
+            <option value="operativa">Operativa</option>
+            <option value="en-vuelo">En Vuelo</option>
+            <option value="mantenimiento">Mantenimiento</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label fw-bold">Tipo</label>
+          <select class="form-select form-select-lg" id="filtroTipo">
+            <option value="">Todos</option>
+            <option value="carga">Carga</option>
+            <option value="pasajeros">Pasajeros</option>
+            <option value="mixto">Mixto</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-secondary btn-lg w-100" onclick="limpiarFiltros()">
+            <i class="bi bi-arrow-clockwise me-2"></i>Limpiar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cards Grid -->
+    <div class="cards-grid" id="aeronavesGrid">
+      <!-- Se llena dinámicamente -->
+    </div>
+  </main>
+
+  <!-- Modal Nueva Aeronave -->
+  <div class="modal fade" id="nuevaAeronaveModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header-custom">
+          <h5 class="modal-title"><i class="bi bi-airplane me-2"></i>Registrar Nueva Aeronave</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-4">
+          <form id="formNuevaAeronave">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Matrícula *</label>
+                <input type="text" class="form-control" id="matricula" required placeholder="CC-XXX">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Tipo de Aeronave *</label>
+                <select class="form-select" id="tipo" required>
+                  <option value="">Seleccionar...</option>
+                  <option value="carga">Carga</option>
+                  <option value="pasajeros">Pasajeros</option>
+                  <option value="mixto">Mixto</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Fabricante *</label>
+                <input type="text" class="form-control" id="fabricante" required placeholder="Boeing, Airbus, etc.">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Modelo *</label>
+                <input type="text" class="form-control" id="modelo" required>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label fw-bold">Año *</label>
+                <input type="number" class="form-control" id="anio" min="1980" max="2025" required>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label fw-bold">Capacidad (kg)</label>
+                <input type="number" class="form-control" id="capacidad" step="100">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label fw-bold">Horas de Vuelo</label>
+                <input type="number" class="form-control" id="horasVuelo" step="0.1" value="0">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Estado Actual *</label>
+                <select class="form-select" id="estado" required>
+                  <option value="operativa">Operativa</option>
+                  <option value="en-vuelo">En Vuelo</option>
+                  <option value="mantenimiento">Mantenimiento</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Base Operativa</label>
+                <input type="text" class="form-control" id="base" placeholder="Ej: Santiago, Chile">
+              </div>
+              <div class="col-12">
+                <label class="form-label fw-bold">Observaciones</label>
+                <textarea class="form-control" id="observaciones" rows="3"></textarea>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" onclick="guardarAeronave()">
+            <i class="bi bi-check-circle me-2"></i>Guardar Aeronave
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Editar Aeronave -->
+  <div class="modal fade" id="editarAeronaveModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header-custom">
+          <h5 class="modal-title"><i class="bi bi-pencil-square me-2"></i>Editar Aeronave</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-4">
+          <form id="formEditarAeronave">
+            <input type="hidden" id="editId">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Matrícula *</label>
+                <input type="text" class="form-control" id="editMatricula" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Tipo de Aeronave *</label>
+                <select class="form-select" id="editTipo" required>
+                  <option value="carga">Carga</option>
+                  <option value="pasajeros">Pasajeros</option>
+                  <option value="mixto">Mixto</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Fabricante *</label>
+                <input type="text" class="form-control" id="editFabricante" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Modelo *</label>
+                <input type="text" class="form-control" id="editModelo" required>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label fw-bold">Año *</label>
+                <input type="number" class="form-control" id="editAnio" min="1980" max="2025" required>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label fw-bold">Capacidad (kg)</label>
+                <input type="number" class="form-control" id="editCapacidad" step="100">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label fw-bold">Horas de Vuelo</label>
+                <input type="number" class="form-control" id="editHorasVuelo" step="0.1">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Estado Actual *</label>
+                <select class="form-select" id="editEstado" required>
+                  <option value="operativa">Operativa</option>
+                  <option value="en-vuelo">En Vuelo</option>
+                  <option value="mantenimiento">Mantenimiento</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Base Operativa</label>
+                <input type="text" class="form-control" id="editBase">
+              </div>
+              <div class="col-12">
+                <label class="form-label fw-bold">Observaciones</label>
+                <textarea class="form-control" id="editObservaciones" rows="3"></textarea>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" onclick="actualizarAeronave()">
+            <i class="bi bi-check-circle me-2"></i>Actualizar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    let aeronaves = [
+      {
+        id: 1,
+        matricula: 'CC-ABC',
+        tipo: 'carga',
+        fabricante: 'Boeing',
+        modelo: '737-800F',
+        anio: 2018,
+        capacidad: 23000,
+        horasVuelo: 12500.5,
+        estado: 'operativa',
+        base: 'Santiago, Chile',
+        observaciones: 'Aeronave en perfectas condiciones'
+      },
+      {
+        id: 2,
+        matricula: 'CC-DEF',
+        tipo: 'mixto',
+        fabricante: 'Airbus',
+        modelo: 'A320neo',
+        anio: 2020,
+        capacidad: 15000,
+        horasVuelo: 8200.3,
+        estado: 'en-vuelo',
+        base: 'Valparaíso, Chile',
+        observaciones: 'Ruta Buenos Aires activa'
+      },
+      {
+        id: 3,
+        matricula: 'CC-GHI',
+        tipo: 'carga',
+        fabricante: 'Boeing',
+        modelo: '767-300F',
+        anio: 2015,
+        capacidad: 52000,
+        horasVuelo: 18900.8,
+        estado: 'mantenimiento',
+        base: 'Santiago, Chile',
+        observaciones: 'Mantenimiento mayor - cambio de motores'
+      }
+    ];
+
+    let siguienteId = 4;
+
+    // Inicializar
+    document.addEventListener('DOMContentLoaded', function() {
+      renderizarAeronaves();
+      actualizarEstadisticas();
+      
+      // Event listeners para filtros
+      document.getElementById('buscarAeronave').addEventListener('input', filtrarAeronaves);
+      document.getElementById('filtroEstado').addEventListener('change', filtrarAeronaves);
+      document.getElementById('filtroTipo').addEventListener('change', filtrarAeronaves);
+    });
+
+    // Función para mostrar notificaciones
+    function mostrarNotificacion(mensaje, tipo = 'success') {
+      const alertContainer = document.getElementById('alertContainer');
+      const alertDiv = document.createElement('div');
+      alertDiv.className = `alert alert-${tipo} alert-dismissible fade show`;
+      alertDiv.role = 'alert';
+      
+      const iconMap = {
+        success: 'check-circle-fill',
+        danger: 'exclamation-triangle-fill',
+        info: 'info-circle-fill',
+        warning: 'exclamation-circle-fill'
+      };
+      
+      alertDiv.innerHTML = `
+        <i class="bi bi-${iconMap[tipo]} me-2"></i>${mensaje}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      `;
+      alertContainer.appendChild(alertDiv);
+      
+      setTimeout(() => {
+        alertDiv.classList.remove('show');
+        setTimeout(() => alertDiv.remove(), 150);
+      }, 3000);
+    }
+
+    function renderizarAeronaves(aeronavesAMostrar = aeronaves) {
+      const grid = document.getElementById('aeronavesGrid');
+      grid.innerHTML = '';
+      
+      if (aeronavesAMostrar.length === 0) {
+        grid.innerHTML = '<div class="col-12 text-center text-muted py-5"><h4>No se encontraron aeronaves</h4></div>';
+        return;
+      }
+      
+      aeronavesAMostrar.forEach(a => {
+        const card = document.createElement('div');
+        card.className = 'aeronave-card';
+        card.innerHTML = `
+          <div class="card-header-custom">
+            <div class="icon-badge">
+              <i class="bi bi-airplane"></i>
+            </div>
+            <h3 class="mb-1">${a.matricula}</h3>
+            <p class="mb-0 opacity-75">${a.fabricante} ${a.modelo}</p>
+          </div>
+          <div class="card-body-custom">
+            <div class="info-row">
+              <span class="info-label">Tipo</span>
+              <span class="info-value">${capitalize(a.tipo)}</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Año</span>
+              <span class="info-value">${a.anio}</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Capacidad</span>
+              <span class="info-value">${a.capacidad ? a.capacidad.toLocaleString() + ' kg' : 'N/A'}</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Horas de Vuelo</span>
+              <span class="info-value">${a.horasVuelo ? a.horasVuelo.toLocaleString() + ' hrs' : '0 hrs'}</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Base Operativa</span>
+              <span class="info-value">${a.base || 'N/A'}</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Estado</span>
+              <span class="status-badge status-${a.estado}">${capitalize(a.estado.replace('-', ' '))}</span>
+            </div>
+          </div>
+          <div class="card-actions">
+            <button class="btn btn-sm btn-outline-primary flex-fill" onclick="editarAeronave(${a.id})" title="Editar aeronave">
+              <i class="bi bi-pencil me-1"></i>Editar
+            </button>
+            <button class="btn btn-sm btn-outline-danger" onclick="eliminarAeronave(${a.id})" title="Eliminar aeronave">
+              <i class="bi bi-trash"></i>
+            </button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function actualizarEstadisticas() {
+      document.getElementById('totalAeronaves').textContent = aeronaves.length;
+      document.getElementById('operativas').textContent = aeronaves.filter(a => a.estado === 'operativa').length;
+      document.getElementById('enVuelo').textContent = aeronaves.filter(a => a.estado === 'en-vuelo').length;
+      document.getElementById('mantenimiento').textContent = aeronaves.filter(a => a.estado === 'mantenimiento').length;
+    }
+
+    // FUNCIÓN GUARDAR AERONAVE - COMPLETA Y FUNCIONAL
+    function guardarAeronave() {
+      // Validar formulario
+      const form = document.getElementById('formNuevaAeronave');
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      const aeronave = {
+        id: siguienteId++,
+        matricula: document.getElementById('matricula').value.toUpperCase(),
+        tipo: document.getElementById('tipo').value,
+        fabricante: document.getElementById('fabricante').value,
+        modelo: document.getElementById('modelo').value,
+        anio: parseInt(document.getElementById('anio').value),
+        capacidad: parseFloat(document.getElementById('capacidad').value) || 0,
+        horasVuelo: parseFloat(document.getElementById('horasVuelo').value) || 0,
+        estado: document.getElementById('estado').value,
+        base: document.getElementById('base').value,
+        observaciones: document.getElementById('observaciones').value
+      };
+      
+      aeronaves.push(aeronave);
+      renderizarAeronaves();
+      actualizarEstadisticas();
+      
+      // Cerrar modal
+      const modal = bootstrap.Modal.getInstance(document.getElementById('nuevaAeronaveModal'));
+      modal.hide();
+      
+      // Limpiar formulario
+      form.reset();
+      
+      // Mostrar notificación
+      mostrarNotificacion('✓ Aeronave registrada exitosamente', 'success');
+    }
+
+    function editarAeronave(id) {
+      const aeronave = aeronaves.find(a => a.id === id);
+      if (!aeronave) return;
+      
+      document.getElementById('editId').value = aeronave.id;
+      document.getElementById('editMatricula').value = aeronave.matricula;
+      document.getElementById('editTipo').value = aeronave.tipo;
+      document.getElementById('editFabricante').value = aeronave.fabricante;
+      document.getElementById('editModelo').value = aeronave.modelo;
+      document.getElementById('editAnio').value = aeronave.anio;
+      document.getElementById('editCapacidad').value = aeronave.capacidad;
+      document.getElementById('editHorasVuelo').value = aeronave.horasVuelo;
+      document.getElementById('editEstado').value = aeronave.estado;
+      document.getElementById('editBase').value = aeronave.base;
+      document.getElementById('editObservaciones').value = aeronave.observaciones;
+      
+      new bootstrap.Modal(document.getElementById('editarAeronaveModal')).show();
+    }
+
+    function actualizarAeronave() {
+      const id = parseInt(document.getElementById('editId').value);
+      const index = aeronaves.findIndex(a => a.id === id);
+      
+      if (index !== -1) {
+        aeronaves[index] = {
+          ...aeronaves[index],
+          matricula: document.getElementById('editMatricula').value.toUpperCase(),
+          tipo: document.getElementById('editTipo').value,
+          fabricante: document.getElementById('editFabricante').value,
+          modelo: document.getElementById('editModelo').value,
+          anio: parseInt(document.getElementById('editAnio').value),
+          capacidad: parseFloat(document.getElementById('editCapacidad').value) || 0,
+          horasVuelo: parseFloat(document.getElementById('editHorasVuelo').value) || 0,
+          estado: document.getElementById('editEstado').value,
+          base: document.getElementById('editBase').value,
+          observaciones: document.getElementById('editObservaciones').value
+        };
+        
+        renderizarAeronaves();
+        actualizarEstadisticas();
+        
+        bootstrap.Modal.getInstance(document.getElementById('editarAeronaveModal')).hide();
+        mostrarNotificacion('✓ Aeronave actualizada exitosamente', 'info');
+      }
+    }
+
+    function eliminarAeronave(id) {
+      if (confirm('¿Está seguro de eliminar esta aeronave? Esta acción no se puede deshacer.')) {
+        aeronaves = aeronaves.filter(a => a.id !== id);
+        renderizarAeronaves();
+        actualizarEstadisticas();
+        mostrarNotificacion('✓ Aeronave eliminada exitosamente', 'danger');
+      }
+    }
+
+    function filtrarAeronaves() {
+      const buscar = document.getElementById('buscarAeronave').value.toLowerCase();
+      const estado = document.getElementById('filtroEstado').value;
+      const tipo = document.getElementById('filtroTipo').value;
+      
+      let aeronavesFiltradasResult = [...aeronaves];
+      
+      // Filtrar por búsqueda de texto
+      if (buscar) {
+        aeronavesFiltradasResult = aeronavesFiltradasResult.filter(a => 
+          a.matricula.toLowerCase().includes(buscar) ||
+          a.fabricante.toLowerCase().includes(buscar) ||
+          a.modelo.toLowerCase().includes(buscar)
+        );
+      }
+      
+      // Filtrar por estado
+      if (estado) {
+        aeronavesFiltradasResult = aeronavesFiltradasResult.filter(a => a.estado === estado);
+      }
+      
+      // Filtrar por tipo
+      if (tipo) {
+        aeronavesFiltradasResult = aeronavesFiltradasResult.filter(a => a.tipo === tipo);
+      }
+      
+      renderizarAeronaves(aeronavesFiltradasResult);
+    }
+
+    function limpiarFiltros() {
+      document.getElementById('buscarAeronave').value = '';
+      document.getElementById('filtroEstado').value = '';
+      document.getElementById('filtroTipo').value = '';
+      renderizarAeronaves(aeronaves);
+    }
+
+    // Funciones auxiliares
+    function capitalize(str) {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+  </script>
+</body>
+</html>
+
+<footer style="background:#222; color:#fff; text-align:center; padding:20px 0;">
+  <div>
+    <p>&copy; Martin petron Maximiliano Muñoz AP-173-N4 2025.</p>
+    <p>
+      <a href="/privacidad" style="color:#aaa; text-decoration:underline;">Política de privacidad</a> |
+      <a href="/contacto" style="color:#aaa; text-decoration:underline;">Contacto</a>
+    </p>
+  </div>
+</footer>

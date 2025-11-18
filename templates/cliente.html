@@ -1,0 +1,819 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Clientes - Logística Global Ltda.</title>
+  
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary-color: #0b67ff;
+      --secondary-color: #00b4ff;
+      --dark-color: #0f172a;
+      --muted-color: #6b7280;
+      --success-color: #10b981;
+      --warning-color: #f59e0b;
+      --danger-color: #ef4444;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(180deg, #f7fbff 0%, #ffffff 100%);
+      min-height: 100vh;
+    }
+    
+    /* Navbar */
+    .navbar-custom {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 20px rgba(12, 24, 50, 0.08);
+      padding: 1rem 0;
+    }
+    
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--dark-color);
+    }
+    
+    .logo-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 12px rgba(11, 103, 255, 0.3);
+    }
+    
+    .brand-text h5 {
+      margin: 0;
+      font-weight: 700;
+      color: var(--dark-color);
+      font-size: 1.1rem;
+    }
+    
+    .brand-text small {
+      color: var(--muted-color);
+      font-size: 0.75rem;
+    }
+    
+    .navbar-custom .nav-link {
+      color: var(--muted-color);
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    
+    .navbar-custom .nav-link:hover,
+    .navbar-custom .nav-link.active {
+      color: var(--primary-color);
+    }
+    
+    .navbar-custom .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 1rem;
+      right: 1rem;
+      height: 3px;
+      background: var(--primary-color);
+      border-radius: 2px;
+    }
+    
+    .btn-primary-custom {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      border: none;
+      color: white;
+      font-weight: 600;
+      padding: 0.5rem 1.5rem;
+      border-radius: 8px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .btn-primary-custom:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(11, 103, 255, 0.4);
+    }
+    
+    /* Page Header */
+    .page-header {
+      background: white;
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 20px rgba(12, 24, 50, 0.06);
+    }
+    
+    .page-header h1 {
+      margin: 0;
+      font-size: 2rem;
+      color: var(--dark-color);
+    }
+    
+    .page-header p {
+      margin: 0.5rem 0 0;
+      color: var(--muted-color);
+    }
+    
+    /* Stats Cards */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .stat-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 15px rgba(12, 24, 50, 0.05);
+      border-left: 4px solid var(--primary-color);
+    }
+    
+    .stat-card.success {
+      border-left-color: var(--success-color);
+    }
+    
+    .stat-card.warning {
+      border-left-color: var(--warning-color);
+    }
+    
+    .stat-card.danger {
+      border-left-color: var(--danger-color);
+    }
+    
+    .stat-card h3 {
+      font-size: 2rem;
+      margin: 0;
+      font-weight: 700;
+      color: var(--dark-color);
+    }
+    
+    .stat-card p {
+      margin: 0.25rem 0 0;
+      color: var(--muted-color);
+      font-size: 0.9rem;
+    }
+    
+    /* Filters */
+    .filters-section {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 15px rgba(12, 24, 50, 0.05);
+    }
+    
+    /* Table */
+    .table-container {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 15px rgba(12, 24, 50, 0.05);
+    }
+    
+    .table thead {
+      background: #f8fafc;
+    }
+    
+    .table thead th {
+      border-bottom: 2px solid #e5e7eb;
+      color: var(--dark-color);
+      font-weight: 600;
+      padding: 1rem;
+    }
+    
+    .table tbody td {
+      padding: 1rem;
+      vertical-align: middle;
+    }
+    
+    .badge-activo {
+      background: #d1fae5;
+      color: #065f46;
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    
+    .badge-inactivo {
+      background: #fee2e2;
+      color: #991b1b;
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    
+    .btn-action {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.85rem;
+      border-radius: 6px;
+    }
+    
+    /* Modal */
+    .modal-header {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+    }
+    
+    .modal-header .btn-close {
+      filter: brightness(0) invert(1);
+    }
+
+    /* Alert container */
+    #alertContainer {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      z-index: 9999;
+      max-width: 400px;
+    }
+    
+    @media (max-width: 991px) {
+      .navbar-custom .nav-link.active::after {
+        display: none;
+      }
+      
+      .page-header h1 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Alert Container -->
+  <div id="alertContainer"></div>
+
+  <!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+  <div class="container">
+
+    <a class="navbar-brand logo-container" href="#">
+      <div class="logo-icon">LG</div>
+      <div class="brand-text">
+        <h5>Logística Global Ltda.</h5>
+        <small>Transporte terrestre y aéreo</small>
+      </div>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto align-items-lg-center">
+        
+        <li class="nav-item">
+          <a class="nav-link active" href="">
+            <i class="bi bi-house-door me-1"></i> Inicio
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'vehiculos' %}">
+            <i class="bi bi-truck me-1"></i> Vehículos
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'aeronaves' %}">
+            <i class="bi bi-airplane me-1"></i> Aeronaves
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'pilotos' %}">
+            <i class="bi bi-people me-1"></i> Pilotos
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'rutas' %}">
+            <i class="bi bi-geo-alt me-1"></i> Rutas
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'despachos' %}">
+            <i class="bi bi-box-seam me-1"></i> Despachos
+          </a>
+        </li>
+         <li class="nav-item">
+          <a class="nav-link" href="{% url 'carga' %}">
+            <i class="bi bi-box-seam me-1"></i> Carga
+          </a>
+        </li>
+         <li class="nav-item">
+          <a class="nav-link" href="{% url 'cliente' %}">
+            <i class="bi bi-truck me-1"></i> Clientes
+          </a>
+        </li>
+
+       
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  <!-- Main Content -->
+  <main class="container my-4">
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="d-flex justify-content-between align-items-center flex-wrap">
+        <div>
+          <h1><i class="bi bi-person-badge text-primary me-2"></i>Gestión de Clientes</h1>
+          <p>Administra la información de tus clientes y su historial de servicios</p>
+        </div>
+        <button class="btn btn-outline-primary" onclick="exportarDatos()">
+          <i class="bi bi-download me-2"></i>Exportar Excel
+        </button>
+      </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3 id="totalClientes">0</h3>
+        <p>Total Clientes</p>
+      </div>
+      <div class="stat-card success">
+        <h3 id="clientesActivos">0</h3>
+        <p>Clientes Activos</p>
+      </div>
+      <div class="stat-card warning">
+        <h3 id="clientesInactivos">0</h3>
+        <p>Clientes Inactivos</p>
+      </div>
+      <div class="stat-card danger">
+        <h3 id="clientesVIP">0</h3>
+        <p>Clientes VIP</p>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="filters-section">
+      <div class="row g-3">
+        <div class="col-md-4">
+          <input type="text" class="form-control" id="buscarCliente" placeholder="Buscar por nombre, RUT o email...">
+        </div>
+        <div class="col-md-3">
+          <select class="form-select" id="filtroEstado">
+            <option value="">Todos los estados</option>
+            <option value="activo">Activo</option>
+            <option value="inactivo">Inactivo</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <select class="form-select" id="filtroTipo">
+            <option value="">Todos los tipos</option>
+            <option value="empresa">Empresa</option>
+            <option value="particular">Particular</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-secondary w-100" onclick="limpiarFiltros()">
+            <i class="bi bi-x-circle me-1"></i>Limpiar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-container">
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Nombre/Empresa</th>
+              <th>RUT</th>
+              <th>Email</th>
+              <th>Teléfono</th>
+              <th>Tipo</th>
+              <th>Estado</th>
+              <th>Despachos</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tablaClientes">
+            <!-- Se llena dinámicamente -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal Nuevo Cliente -->
+  <div class="modal fade" id="nuevoClienteModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="bi bi-person-plus me-2"></i>Nuevo Cliente</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="formNuevoCliente">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Nombre/Razón Social *</label>
+                <input type="text" class="form-control" id="nombre" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">RUT *</label>
+                <input type="text" class="form-control" id="rut" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Tipo de Cliente *</label>
+                <select class="form-select" id="tipo" required>
+                  <option value="">Seleccionar...</option>
+                  <option value="empresa">Empresa</option>
+                  <option value="particular">Particular</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Email *</label>
+                <input type="email" class="form-control" id="email" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Teléfono *</label>
+                <input type="tel" class="form-control" id="telefono" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Estado *</label>
+                <select class="form-select" id="estado" required>
+                  <option value="activo">Activo</option>
+                  <option value="inactivo">Inactivo</option>
+                </select>
+              </div>
+              <div class="col-md-12">
+                <label class="form-label">Dirección</label>
+                <input type="text" class="form-control" id="direccion">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Ciudad</label>
+                <input type="text" class="form-control" id="ciudad">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">País</label>
+                <input type="text" class="form-control" id="pais" value="Chile">
+              </div>
+              <div class="col-12">
+                <label class="form-label">Observaciones</label>
+                <textarea class="form-control" id="observaciones" rows="3"></textarea>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" onclick="guardarCliente()">
+            <i class="bi bi-check-circle me-2"></i>Guardar Cliente
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Editar Cliente -->
+  <div class="modal fade" id="editarClienteModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="bi bi-pencil me-2"></i>Editar Cliente</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="formEditarCliente">
+            <input type="hidden" id="editId">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Nombre/Razón Social *</label>
+                <input type="text" class="form-control" id="editNombre" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">RUT *</label>
+                <input type="text" class="form-control" id="editRut" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Tipo de Cliente *</label>
+                <select class="form-select" id="editTipo" required>
+                  <option value="empresa">Empresa</option>
+                  <option value="particular">Particular</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Email *</label>
+                <input type="email" class="form-control" id="editEmail" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Teléfono *</label>
+                <input type="tel" class="form-control" id="editTelefono" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Estado *</label>
+                <select class="form-select" id="editEstado" required>
+                  <option value="activo">Activo</option>
+                  <option value="inactivo">Inactivo</option>
+                </select>
+              </div>
+              <div class="col-md-12">
+                <label class="form-label">Dirección</label>
+                <input type="text" class="form-control" id="editDireccion">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Ciudad</label>
+                <input type="text" class="form-control" id="editCiudad">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">País</label>
+                <input type="text" class="form-control" id="editPais">
+              </div>
+              <div class="col-12">
+                <label class="form-label">Observaciones</label>
+                <textarea class="form-control" id="editObservaciones" rows="3"></textarea>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" onclick="actualizarCliente()">
+            <i class="bi bi-check-circle me-2"></i>Actualizar Cliente
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    let clientes = [
+      {
+        id: 1,
+        nombre: 'Transportes del Sur S.A.',
+        rut: '76.123.456-7',
+        tipo: 'empresa',
+        email: 'contacto@transportessur.cl',
+        telefono: '+56 9 1234 5678',
+        estado: 'activo',
+        direccion: 'Av. Libertador 1234',
+        ciudad: 'Santiago',
+        pais: 'Chile',
+        despachos: 45,
+        observaciones: 'Cliente preferencial, pagos al día'
+      },
+      {
+        id: 2,
+        nombre: 'María González López',
+        rut: '12.345.678-9',
+        tipo: 'particular',
+        email: 'maria.gonzalez@email.com',
+        telefono: '+56 9 8765 4321',
+        estado: 'activo',
+        direccion: 'Los Alerces 567',
+        ciudad: 'Valparaíso',
+        pais: 'Chile',
+        despachos: 12,
+        observaciones: 'Cliente frecuente, envíos mensuales'
+      },
+      {
+        id: 3,
+        nombre: 'Comercial Pérez Ltda.',
+        rut: '77.987.654-3',
+        tipo: 'empresa',
+        email: 'ventas@comercialperez.cl',
+        telefono: '+56 9 5555 6666',
+        estado: 'inactivo',
+        direccion: 'Calle Principal 890',
+        ciudad: 'Concepción',
+        pais: 'Chile',
+        despachos: 8,
+        observaciones: 'Inactivo desde marzo 2024'
+      }
+    ];
+
+    let siguienteId = 4;
+
+    // Inicializar
+    document.addEventListener('DOMContentLoaded', function() {
+      cargarClientes();
+      actualizarEstadisticas();
+      
+      // Event listeners para filtros
+      document.getElementById('buscarCliente').addEventListener('input', filtrarClientes);
+      document.getElementById('filtroEstado').addEventListener('change', filtrarClientes);
+      document.getElementById('filtroTipo').addEventListener('change', filtrarClientes);
+    });
+
+    function mostrarNotificacion(mensaje, tipo = 'success') {
+      const alertContainer = document.getElementById('alertContainer');
+      const alertDiv = document.createElement('div');
+      alertDiv.className = `alert alert-${tipo} alert-dismissible fade show`;
+      alertDiv.role = 'alert';
+      alertDiv.innerHTML = `
+        <i class="bi bi-check-circle-fill me-2"></i>${mensaje}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      `;
+      alertContainer.appendChild(alertDiv);
+      setTimeout(() => {
+        alertDiv.classList.remove('show');
+        setTimeout(() => alertDiv.remove(), 150);
+      }, 3000);
+    }
+
+    function cargarClientes() {
+      const tbody = document.getElementById('tablaClientes');
+      tbody.innerHTML = '';
+      
+      clientes.forEach(c => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${c.nombre}</strong></td>
+          <td>${c.rut}</td>
+          <td>${c.email}</td>
+          <td>${c.telefono}</td>
+          <td>${capitalize(c.tipo)}</td>
+          <td><span class="badge-${c.estado}">${capitalize(c.estado)}</span></td>
+          <td><span class="badge bg-primary">${c.despachos}</span></td>
+          <td>
+            <button class="btn btn-sm btn-outline-primary btn-action me-1" onclick="editarCliente(${c.id})" title="Editar">
+              <i class="bi bi-pencil"></i>
+            </button>
+            <button class="btn btn-sm btn-outline-danger btn-action" onclick="eliminarCliente(${c.id})" title="Eliminar">
+              <i class="bi bi-trash"></i>
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function actualizarEstadisticas() {
+      document.getElementById('totalClientes').textContent = clientes.length;
+      document.getElementById('clientesActivos').textContent = clientes.filter(c => c.estado === 'activo').length;
+      document.getElementById('clientesInactivos').textContent = clientes.filter(c => c.estado === 'inactivo').length;
+      document.getElementById('clientesVIP').textContent = clientes.filter(c => c.despachos > 20).length;
+    }
+
+    function guardarCliente() {
+      const form = document.getElementById('formNuevoCliente');
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      const cliente = {
+        id: siguienteId++,
+        nombre: document.getElementById('nombre').value,
+        rut: document.getElementById('rut').value,
+        tipo: document.getElementById('tipo').value,
+        email: document.getElementById('email').value,
+        telefono: document.getElementById('telefono').value,
+        estado: document.getElementById('estado').value,
+        direccion: document.getElementById('direccion').value,
+        ciudad: document.getElementById('ciudad').value,
+        pais: document.getElementById('pais').value,
+        despachos: 0,
+        observaciones: document.getElementById('observaciones').value
+      };
+      
+      clientes.push(cliente);
+      cargarClientes();
+      actualizarEstadisticas();
+      
+      bootstrap.Modal.getInstance(document.getElementById('nuevoClienteModal')).hide();
+      form.reset();
+      mostrarNotificacion('✓ Cliente agregado exitosamente', 'success');
+    }
+
+    function editarCliente(id) {
+      const cliente = clientes.find(c => c.id === id);
+      if (!cliente) return;
+      
+      document.getElementById('editId').value = cliente.id;
+      document.getElementById('editNombre').value = cliente.nombre;
+      document.getElementById('editRut').value = cliente.rut;
+      document.getElementById('editTipo').value = cliente.tipo;
+      document.getElementById('editEmail').value = cliente.email;
+      document.getElementById('editTelefono').value = cliente.telefono;
+      document.getElementById('editEstado').value = cliente.estado;
+      document.getElementById('editDireccion').value = cliente.direccion;
+      document.getElementById('editCiudad').value = cliente.ciudad;
+      document.getElementById('editPais').value = cliente.pais;
+      document.getElementById('editObservaciones').value = cliente.observaciones;
+      
+      new bootstrap.Modal(document.getElementById('editarClienteModal')).show();
+    }
+
+    function actualizarCliente() {
+      const id = parseInt(document.getElementById('editId').value);
+      const index = clientes.findIndex(c => c.id === id);
+      
+      if (index !== -1) {
+        clientes[index] = {
+          ...clientes[index],
+          nombre: document.getElementById('editNombre').value,
+          rut: document.getElementById('editRut').value,
+          tipo: document.getElementById('editTipo').value,
+          email: document.getElementById('editEmail').value,
+          telefono: document.getElementById('editTelefono').value,
+          estado: document.getElementById('editEstado').value,
+          direccion: document.getElementById('editDireccion').value,
+          ciudad: document.getElementById('editCiudad').value,
+          pais: document.getElementById('editPais').value,
+          observaciones: document.getElementById('editObservaciones').value
+        };
+        
+        cargarClientes();
+        actualizarEstadisticas();
+        
+        bootstrap.Modal.getInstance(document.getElementById('editarClienteModal')).hide();
+        mostrarNotificacion('✓ Cliente actualizado exitosamente', 'info');
+      }
+    }
+
+    function eliminarCliente(id) {
+      if (confirm('¿Está seguro de eliminar este cliente?')) {
+        clientes = clientes.filter(c => c.id !== id);
+        cargarClientes();
+        actualizarEstadisticas();
+        mostrarNotificacion('✓ Cliente eliminado exitosamente', 'danger');
+      }
+    }
+
+    function filtrarClientes() {
+      const buscar = document.getElementById('buscarCliente').value.toLowerCase();
+      const estado = document.getElementById('filtroEstado').value;
+      const tipo = document.getElementById('filtroTipo').value;
+      
+      const tbody = document.getElementById('tablaClientes');
+      const filas = tbody.getElementsByTagName('tr');
+      
+      Array.from(filas).forEach((fila, index) => {
+        const cliente = clientes[index];
+        let mostrar = true;
+        
+        if (buscar && !cliente.nombre.toLowerCase().includes(buscar) && 
+            !cliente.rut.includes(buscar) &&
+            !cliente.email.toLowerCase().includes(buscar)) {
+          mostrar = false;
+        }
+        
+        if (estado && cliente.estado !== estado) {
+          mostrar = false;
+        }
+        
+        if (tipo && cliente.tipo !== tipo) {
+          mostrar = false;
+        }
+        
+        fila.style.display = mostrar ? '' : 'none';
+      });
+    }
+
+    function limpiarFiltros() {
+      document.getElementById('buscarCliente').value = '';
+      document.getElementById('filtroEstado').value = '';
+      document.getElementById('filtroTipo').value = '';
+      filtrarClientes();
+    }
+
+    function exportarDatos() {
+      mostrarNotificacion('Función de exportación en desarrollo', 'info');
+    }
+
+    function capitalize(str) {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+  </script>
+</body>
+</html>
+
+<footer style="background:#222; color:#fff; text-align:center; padding:20px 0;">
+  <div>
+    <p>&copy; Martin petron Maximiliano Muñoz AP-173-N4 2025.</p>
+    <p>
+      <a href="/privacidad" style="color:#aaa; text-decoration:underline;">Política de privacidad</a> |
+      <a href="/contacto" style="color:#aaa; text-decoration:underline;">Contacto</a>
+    </p>
+  </div>
+</footer>
